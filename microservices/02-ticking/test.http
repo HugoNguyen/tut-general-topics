@@ -1,0 +1,4 @@
+
+GET http://ticketing.hugo2908-02-ticking-auth.com/api/users/currentuser
+Content-Type: application/javascript
+
