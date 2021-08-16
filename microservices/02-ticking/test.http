@@ -21,4 +21,38 @@ Content-Type: application/json
     "password": "abc_pw"
 }
 
-####
+### Test: signin throw password validation error
+POST https://ticketing.hugo2908-02-ticking-auth.com/api/users/signin HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "abc@abc.com",
+    "password": ""
+}
+
+### Test: signin successfully
+POST https://ticketing.hugo2908-02-ticking-auth.com/api/users/signin HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "abc@abc.com",
+    "password": "abc_pw"
+}
+
+### Test: currentuser
+GET  https://ticketing.hugo2908-02-ticking-auth.com/api/users/currentuser HTTP/1.1
+Content-Type: application/json
+Cookie: express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TVdFM1kySTRPVEUyWmpZMk1EQXhZbUUwWm1NMVlpSXNJbVZ0WVdsc0lqb2lZV0pqUUdGaVl5NWpiMjBpTENKcFlYUWlPakUyTWpreE1qVTRNVFo5Lk5iQjRBczNyQWlNYnV4cDA5VEJweDR0SHgwbFYzTzRwSkltWkNIejRNVWMifQ==;
+
+{
+    "email": "abc@abc.com",
+    "password": "abc_pw"
+}
+
+###
+
+### Test: signout
+POST   https://ticketing.hugo2908-02-ticking-auth.com/api/users/signout HTTP/1.1
+Content-Type: application/json
+
+###
