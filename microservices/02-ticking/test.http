@@ -1,9 +1,9 @@
 
-GET http://ticketing.hugo2908-02-ticking-auth.com/api/users/currentuser
+GET https://ticketing.hugo2908-02-ticking-auth.com/api/users/currentuser
 Content-Type: application/json
 
 ### Test: signup sucessfull
-POST http://ticketing.hugo2908-02-ticking-auth.com/api/users/signup HTTP/1.1
+POST https://ticketing.hugo2908-02-ticking-auth.com/api/users/signup HTTP/1.1
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 
 ### Test: signup throw email validation error
-POST http://ticketing.hugo2908-02-ticking-auth.com/api/users/signup HTTP/1.1
+POST https://ticketing.hugo2908-02-ticking-auth.com/api/users/signup HTTP/1.1
 Content-Type: application/json
 
 {
