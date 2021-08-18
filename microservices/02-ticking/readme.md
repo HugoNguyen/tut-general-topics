@@ -7,6 +7,12 @@ $skaffold dev
 $kubectl create secret generic <key> --from-literal=<value>
 Ex: $kubectl create secret generic jwt-secret --from-literal=JWT_KEY=secret
 
+### Making request cross namespace
+Ex: call to api/users/currentuser from pod client
+http://SERVICENAME.NAMESPACE.svc.cluster.local/api/users/currentuser
+SERVICENAME=ingress-nginx-controller
+NAMESPACE=ingress-nginx
+
 
 ## Test
 
