@@ -21,3 +21,9 @@ jest, suppertest
 
 #### NPM package
 jest ts-jest supertest mongodb-memory-server
+
+
+## NPM
+### Publish package
+$npm login
+$npm publish --access public
