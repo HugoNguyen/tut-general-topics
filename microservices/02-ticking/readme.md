@@ -31,6 +31,10 @@ $npm publish --access public
 ## NATS Streaming Server
 ### Use kubectl forward port, just for test
 $kubectl port-forward <pod_name> 4222:4222
+$kubectl port-forward <pod_name> 8222:8222
 
 ### Use QueueGroup to prevent message send for clone instance
 ### Use setManualAckMode(true) to manual set message is handled
+
+### Healcheck
+http://localhost:8222/streaming/channelsz?subs=1
