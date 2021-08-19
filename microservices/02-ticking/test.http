@@ -56,3 +56,27 @@ POST   https://ticketing.hugo2908-02-ticking-auth.com/api/users/signout HTTP/1.1
 Content-Type: application/json
 
 ###
+
+### Create ticket
+POST   https://ticketing.hugo2908-02-ticking-auth.com/api/tickets HTTP/1.1
+Cookie: express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TVdFM1kySTRPVEUyWmpZMk1EQXhZbUUwWm1NMVlpSXNJbVZ0WVdsc0lqb2lZV0pqUUdGaVl5NWpiMjBpTENKcFlYUWlPakUyTWpreE1qVTRNVFo5Lk5iQjRBczNyQWlNYnV4cDA5VEJweDR0SHgwbFYzTzRwSkltWkNIejRNVWMifQ==;
+Content-Type: application/json
+
+{
+    "title": "NEW CONCERT",
+    "price": 500
+}
+
+###
+
+### Update ticket
+PUT    https://ticketing.hugo2908-02-ticking-auth.com/api/tickets/611e81e7192b5a001ab37dd6 HTTP/1.1
+Cookie: express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TVdFM1kySTRPVEUyWmpZMk1EQXhZbUUwWm1NMVlpSXNJbVZ0WVdsc0lqb2lZV0pqUUdGaVl5NWpiMjBpTENKcFlYUWlPakUyTWpreE1qVTRNVFo5Lk5iQjRBczNyQWlNYnV4cDA5VEJweDR0SHgwbFYzTzRwSkltWkNIejRNVWMifQ==;
+Content-Type: application/json
+
+{
+    "title": "NEW CONCERT",
+    "price": 10
+}
+
+###
