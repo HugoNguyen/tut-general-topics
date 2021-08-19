@@ -27,3 +27,7 @@ jest ts-jest supertest mongodb-memory-server
 ### Publish package
 $npm login
 $npm publish --access public
+
+## NATS Streaming Server
+### Use kubectl forward port, just for test
+$kubectl port-forward <pod_name> 4222:4222
