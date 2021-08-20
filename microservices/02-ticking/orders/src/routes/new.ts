@@ -1,12 +1,16 @@
 import mongoose from 'mongoose';
 import express, { Request, Response } from 'express';
-import { requireAuth, validateRequest } from '@hugo-dev-vn/common';
+import { BadRequestError, NotFoundError, OrderStatus, requireAuth, validateRequest } from '@hugo-dev-vn/common';
 import { body } from 'express-validator';
+import { Ticket } from '../models/ticket';
+import { Order } from '../models/order';
 
 const router = express.Router();
 
+const EXPIRATION_WINDOW_SECONDS = 15 * 60; // 15 MINITES
+
 router.post(
-  '/api/tickets',
+  '/api/orders',
   requireAuth,
   [
     body('ticketId')
@@ -17,7 +21,38 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-  res.send({});
+    const { ticketId } = req.body;
+
+    // Find the ticket the user is trying to order in the database
+    console.log(ticketId);
+    const ticket = await Ticket.findById(ticketId);
+    if(!ticket) {
+      throw new NotFoundError();
+    }
+
+    // Make sure that this ticket is not already reserved
+    const isReserved = await ticket.isReserved();
+    if (isReserved) {
+      throw new BadRequestError('Ticked is alreadyy reserved');
+    }
+
+    // Calculate expiration date for this order
+    const expiration = new Date();
+    expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
+
+    // Build the order and save it to db
+    const order = Order.build({
+      userId: req.currentUser!.id,
+      status: OrderStatus.Created,
+      expiresAt: expiration,
+      ticket,
+    })
+    await order.save();
+
+    // Publish an event saying that an order was created
+
+
+    res.status(201).send(order);
 });
 
 export { router as createOrderRouter };

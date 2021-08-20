@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@hugo-dev-vn/common';
 import { TicketDoc } from './ticket';
+export { OrderStatus } // reexport for using convinent
 
 interface OrderAttrs {
     userId: string;
