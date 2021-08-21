@@ -2,6 +2,7 @@ import { Message } from "node-nats-streaming";
 import { Subjects, Listener, OrderCreatedEvent } from "@hugo-dev-vn/common";
 import { queueGroupName } from './queue-group-name';
 import { Ticket } from "../../models/ticket";
+import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publisher";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 
@@ -30,6 +31,16 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
         // Then, change the ticket price, the ver now is 3
         // Event UpdateTicket emitted, but TicketUpdatedListner cannot handle
         // becuase versions is now diffent over 1
+
+        // Published ticket update event
+        await new TicketUpdatedPublisher(this.client).publish({
+            id: ticket.id,
+            version: ticket.version,
+            title: ticket.title,
+            price: ticket.price,
+            userId: ticket.userId,
+            orderId: ticket.orderId
+        });
 
         // ack the message
         msg.ack();
