@@ -1,14 +1,14 @@
 import { Message } from "node-nats-streaming";
-import { Subjects, Listener, TickedUpdatedEvent } from "@hugo-dev-vn/common";
+import { Subjects, Listener, TicketUpdatedEvent } from "@hugo-dev-vn/common";
 import { queueGroupName } from "./queue-group-name";
 import { Ticket } from "../../models/ticket";
 
-export class TicketUpdatedListener extends Listener<TickedUpdatedEvent> {
+export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
 
     readonly subject = Subjects.TicketUpdated;
     queueGroupName = queueGroupName;
 
-    async onMessage(data: TickedUpdatedEvent['data'], msg: Message): Promise<void> {
+    async onMessage(data: TicketUpdatedEvent['data'], msg: Message): Promise<void> {
         const ticket = await Ticket.findByEvent(data);
 
         if (!ticket) {
