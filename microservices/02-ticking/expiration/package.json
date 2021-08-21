@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hugo-dev-vn/common": "^1.0.13",
+    "@hugo-dev-vn/common": "^1.0.14",
     "@types/bull": "^3.15.3",
     "bull": "^3.29.0",
     "node-nats-streaming": "^0.3.2",
