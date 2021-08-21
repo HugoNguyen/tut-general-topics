@@ -1,5 +1,5 @@
-import { Publisher, Subjects, TickedCreatedEvent } from "@hugo-dev-vn/common";
+import { Publisher, Subjects, TicketCreatedEvent } from "@hugo-dev-vn/common";
 
-export class TicketCreatedPublisher extends Publisher<TickedCreatedEvent> {
+export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
     readonly subject = Subjects.TicketCreated;
 }
