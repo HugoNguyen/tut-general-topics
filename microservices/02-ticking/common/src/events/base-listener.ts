@@ -17,7 +17,7 @@ export abstract class Listener<T extends Event> {
 
     // data must be extracly equal to whatever data was provided on T
     abstract onMessage(data: T['data'], msg: Message): void;
-    private client: Stan;
+    protected client: Stan;
     protected ackWait = 5* 1000;
 
     constructor(client: Stan) {
