@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hugo-dev-vn/common": "^1.0.13",
+    "@hugo-dev-vn/common": "^1.0.14",
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",

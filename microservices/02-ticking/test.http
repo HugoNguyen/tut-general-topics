@@ -80,3 +80,14 @@ Content-Type: application/json
 }
 
 ###
+
+### Create Order
+POST     https://ticketing.hugo2908-02-ticking-auth.com/api/orders HTTP/1.1
+Cookie: express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TVdFM1kySTRPVEUyWmpZMk1EQXhZbUUwWm1NMVlpSXNJbVZ0WVdsc0lqb2lZV0pqUUdGaVl5NWpiMjBpTENKcFlYUWlPakUyTWpreE1qVTRNVFo5Lk5iQjRBczNyQWlNYnV4cDA5VEJweDR0SHgwbFYzTzRwSkltWkNIejRNVWMifQ==;
+Content-Type: application/json
+
+{
+    "ticketId": "61210a65e902b4001ae7e2bf"
+}
+
+###
