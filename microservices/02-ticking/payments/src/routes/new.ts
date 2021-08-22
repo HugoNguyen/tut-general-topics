@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validateRequest, BadRequestError, NotFoundError, NotAuthorizedError } from '@hugo-dev-vn/common';
 import { Order, OrderStatus } from '../models/order';
+import { Payment } from '../models/payment';
 import { stripe } from '../stripe';
 
 const route = express.Router();
@@ -33,11 +34,16 @@ route.post('/api/payments',
             throw new BadRequestError('Cannot pay for an cancelled order');
         }
 
-        await stripe.charges.create({
+        const charge = await stripe.charges.create({
             currency: 'usd',
             amount: order.price * 100, // transform to cent
             source: token,
         });
+        const payment = Payment.build({
+            orderId,
+            stripeId: charge.id,
+        });
+        await payment.save();
 
         res.status(201).send({ success: true });
     }
