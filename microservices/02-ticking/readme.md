@@ -62,3 +62,6 @@ Go to Develop page, get secrect key
 
 ### 4. Mange secret key with kubectl
 $kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=sk_test_51JRB2gEwfPm4lLW0bXuety3Vof2yayqhZd4CoZHIwVls6w44ri9nRdX3GKYi7KHMbQKD1JgLBltpK3peNYEQzFBp00HzBqTolw
+
+### 5. Client, react-stripe-checkout
+Use publish Stripe API key to build a payment checkout

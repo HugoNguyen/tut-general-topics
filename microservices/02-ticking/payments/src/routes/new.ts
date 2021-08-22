@@ -11,16 +11,13 @@ const route = express.Router();
 
 route.post('/api/payments',
     requireAuth, [
-        body('token')
-            .not()
-            .isEmpty(),
         body('orderId')
             .not()
             .isEmpty(),
     ],
     validateRequest,
     async (req: Request, res: Response) => {
-        const { token, orderId } = req.body;
+        const { orderId } = req.body;
 
         const order = await Order.findById(orderId);
 
@@ -36,14 +33,18 @@ route.post('/api/payments',
             throw new BadRequestError('Cannot pay for an cancelled order');
         }
 
-        const charge = await stripe.charges.create({
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount:  order.price * 100,
             currency: 'usd',
-            amount: order.price * 100, // transform to cent
-            source: token,
+            payment_method_types: ['card'],
+            metadata: {
+                order_id: order.id,
+            }
         });
+
         const payment = Payment.build({
             orderId,
-            stripeId: charge.id,
+            stripeId: paymentIntent.id,
         });
         await payment.save();
 
