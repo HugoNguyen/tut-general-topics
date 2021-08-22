@@ -9,6 +9,13 @@ spec:
     - host: ticketing.hugo2908-02-ticking-auth.com
       http:
         paths:
+          - path: /api/payments/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: payments-srv
+                port:
+                  number: 3000
           - path: /api/users/?(.*)
             pathType: Prefix
             backend:

@@ -47,3 +47,18 @@ $kubectl port-forward <pod_name> 8222:8222
 
 ### Healcheck
 http://localhost:8222/streaming/channelsz?subs=1
+
+
+## Stripe
+
+### 1. Install
+$npm install stripe
+
+### 2. Create a Stripe account
+Go to https://stripe.com/
+
+### 3. Retrieve api test key
+Go to Develop page, get secrect key
+
+### 4. Mange secret key with kubectl
+$kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=sk_test_51JRB2gEwfPm4lLW0bXuety3Vof2yayqhZd4CoZHIwVls6w44ri9nRdX3GKYi7KHMbQKD1JgLBltpK3peNYEQzFBp00HzBqTolw

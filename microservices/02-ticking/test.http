@@ -64,7 +64,7 @@ Content-Type: application/json
 
 {
     "title": "NEW CONCERT",
-    "price": 500
+    "price": 15
 }
 
 ###
@@ -87,7 +87,19 @@ Cookie: express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjk
 Content-Type: application/json
 
 {
-    "ticketId": "61210a65e902b4001ae7e2bf"
+    "ticketId": "612203fc7beabd001a16c56f"
+}
+
+###
+
+### Post Payment Charge
+POST     https://ticketing.hugo2908-02-ticking-auth.com/api/payments HTTP/1.1
+Cookie: express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TVdFM1kySTRPVEUyWmpZMk1EQXhZbUUwWm1NMVlpSXNJbVZ0WVdsc0lqb2lZV0pqUUdGaVl5NWpiMjBpTENKcFlYUWlPakUyTWpreE1qVTRNVFo5Lk5iQjRBczNyQWlNYnV4cDA5VEJweDR0SHgwbFYzTzRwSkltWkNIejRNVWMifQ==;
+Content-Type: application/json
+
+{
+    "orderId": "612203a9750bd800191abfa7",
+    "token": "tok_visa"
 }
 
 ###
