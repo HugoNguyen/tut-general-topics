@@ -13,6 +13,15 @@ http://SERVICENAME.NAMESPACE.svc.cluster.local/api/users/currentuser
 SERVICENAME=ingress-nginx-controller
 NAMESPACE=ingress-nginx
 
+### Problem with @types/node
+If fn global.signin show show error, update @types/node inside package-lock.json to this
+`
+    "node_modules/@types/node": {
+      "version": "13.9.5",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-13.9.5.tgz",
+      "integrity": "sha512-hkzMMD3xu6BrJpGVLeQ3htQQNAcOrJjX7WFmtK8zWQpz2UJf13LCFF2ALA7c9OVdvc2vQJeDdjfR35M0sBCxvw=="
+    },
+`
 
 ## Test
 
