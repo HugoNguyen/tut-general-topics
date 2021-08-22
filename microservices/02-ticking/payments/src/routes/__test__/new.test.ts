@@ -4,8 +4,6 @@ import { app } from '../../app';
 import { Order, OrderStatus } from '../../models/order';
 import { stripe } from '../../stripe';
 
-jest.mock('../../stripe.ts');
-
 it('returns a 404 when purchasing an order that does not exit', async () => {
     await request(app)
         .post('/api/payments')
@@ -61,12 +59,12 @@ it('returns a 400 when purchasing a cancelled order', async () => {
 
 it('returns a 201 with valid inputs', async () => {
     const userId= mongoose.Types.ObjectId().toHexString();
-    
+    const price = Math.floor(Math.random() * 100000);
     const order = Order.build({
         id: mongoose.Types.ObjectId().toHexString(),
         userId,
         version: 0,
-        price: 20,
+        price,
         status: OrderStatus.Created
     });
     await order.save();
@@ -80,9 +78,11 @@ it('returns a 201 with valid inputs', async () => {
         })
         .expect(201);
 
-    const chargeOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
+    const stripeCharges = await stripe.charges.list({
+        limit: 50
+    });
 
-    expect(chargeOptions.source).toEqual('tok_visa');
-    expect(chargeOptions.amount).toEqual(order.price * 100);
-    expect(chargeOptions.currency).toEqual('usd');
+    const stripeCharge = stripeCharges.data.find(charge => charge.amount === price * 100);
+
+    expect(stripeCharge).toBeDefined();
 });
