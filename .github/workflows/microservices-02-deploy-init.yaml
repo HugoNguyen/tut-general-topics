@@ -1,5 +1,15 @@
 name: microservice/02-ticking-app/deploy-init
 
+on: 
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: false
+        default: 'warning'
+      tags:
+        description: 'Manualy add secret keyy to K8s'  
+
 env:
   CLUSTER_NAME: test-sa-ticking
   CLUSTER_RESOURCE_GROUP: hugo.group
@@ -11,6 +21,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - run: |
+        echo "Log level: ${{ github.event.inputs.logLevel }}"
+        echo "Tags: ${{ github.event.inputs.tags }}"
+ 
       # Set the target Azure Kubernetes Service (AKS) cluster. 
       - uses: azure/aks-set-context@v1
         with:
