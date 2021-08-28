@@ -8,7 +8,9 @@ on:
         required: false
         default: 'warning'
       tags:
-        description: 'Manualy add secret keyy to K8s'  
+        description: 'Manualy add secret key to K8s'
+        required: false
+        default: 'Manualy add secret key to K8s'
 
 env:
   CLUSTER_NAME: test-sa-ticking
