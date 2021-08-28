@@ -7,7 +7,6 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-    - host: ticking.hugo-idl.biz
       http:
         paths:
           - path: /api/payments/?(.*)
