@@ -4,6 +4,7 @@ metadata:
   name: ingress-service
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
+    kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
     - host: ticking.hugo-idl.biz
