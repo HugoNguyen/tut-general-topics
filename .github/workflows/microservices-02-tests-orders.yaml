@@ -1,0 +1,13 @@
+name: microservice/02-ticking-app/tests-orders
+
+on:
+  pull_request:
+    paths:
+      - 'microservices/02-ticking/orders/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd microservices/02-ticking/orders && npm install && npm run test:ci
