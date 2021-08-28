@@ -1,0 +1,39 @@
+name: microservice/02-ticking-app/deploy-client
+
+on:
+  push:
+    branches:
+      # - master
+      - microservices/02-ticketing-app
+    paths:
+      - 'microservices/02-ticking/client/**'
+
+env:
+  CLUSTER_NAME: test-sa-ticking
+  CLUSTER_RESOURCE_GROUP: hugo.group
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd microservices/02-ticking/client && docker build -t hugo2908/02-ticking-client .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push hugo2908/02-ticking-client
+      # Connect to digitalocean
+      #- uses: digitalocean/action-doctl@v2
+      #  with:
+      #    tokent: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      #- run: doctl kubernetes cluster kubeconfig save ticketing
+
+      # Connect to Azure Kubernetes Service (AKS) cluster. 
+      - uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+
+      - run: kubectl rollout restart deployment client-depl

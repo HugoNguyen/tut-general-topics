@@ -1,0 +1,33 @@
+name: microservice/02-ticking-app/deploy-manifests
+
+on:
+  push:
+    branches:
+      # - master
+      - microservices/02-ticketing-app
+    paths:
+      - 'microservices/02-ticking/infra/**'
+
+env:
+  CLUSTER_NAME: test-sa-ticking
+  CLUSTER_RESOURCE_GROUP: hugo.group
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Connect to digitalocean
+      #- uses: digitalocean/action-doctl@v2
+      #  with:
+      #    tokent: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      #- run: doctl kubernetes cluster kubeconfig save ticketing
+
+      # Connect to Azure Kubernetes Service (AKS) cluster. 
+      - uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+
+      - run: cd microservices/02-ticking && kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
