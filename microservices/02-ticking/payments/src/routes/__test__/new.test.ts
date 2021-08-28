@@ -79,18 +79,24 @@ it('returns a 201 with valid inputs', async () => {
         })
         .expect(201);
 
-    const stripeCharges = await stripe.charges.list({
+    // const stripeCharges = await stripe.charges.list({
+    //     limit: 50
+    // });
+
+    // const stripeCharge = stripeCharges.data.find(charge => charge.amount === price * 100);
+
+    const paymentIntends = await stripe.paymentIntents.list({
         limit: 50
     });
 
-    const stripeCharge = stripeCharges.data.find(charge => charge.amount === price * 100);
+    const paymentIntend = paymentIntends.data.find(p => p.amount === price * 100);
 
-    expect(stripeCharge).toBeDefined();
-    expect(stripeCharge!.currency).toEqual('usd');
+    expect(paymentIntend).toBeDefined();
+    expect(paymentIntend!.currency).toEqual('usd');
 
     const payment = await Payment.findOne({
         orderId: order.id,
-        stripeId: stripeCharge!.id,
+        stripeId: paymentIntend!.id,
     });
 
     expect(payment).not.toBeNull();
