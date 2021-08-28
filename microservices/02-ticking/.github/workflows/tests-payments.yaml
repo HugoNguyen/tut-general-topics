@@ -1,0 +1,12 @@
+name: microservice/02-ticking-app/tests-payments
+
+on:
+  pull_request:
+    branches:
+      - microservices-02-ticketing-app
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        run: cd microservice/02-ticking-app/payments && npm install && npm run test:ci
