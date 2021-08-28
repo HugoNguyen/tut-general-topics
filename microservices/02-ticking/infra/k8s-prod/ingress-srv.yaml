@@ -6,7 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: ticketing.hugo2908-02-ticking-auth.com
+    - host: ticking.hugo-idl.biz
       http:
         paths:
           - path: /api/payments/?(.*)
