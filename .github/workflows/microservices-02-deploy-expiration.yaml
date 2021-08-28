@@ -8,6 +8,10 @@ on:
     paths:
       - 'microservices/02-ticking/expiration/**'
 
+env:
+  CLUSTER_NAME: test-sa-ticking
+  CLUSTER_RESOURCE_GROUP: hugo.group
+
 jobs:
   build:
     runs-on: ubuntu-latest
