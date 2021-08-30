@@ -22,4 +22,4 @@ $npm start
 
 ### Overview
 
-![Overview](/screenshots/overview.png "Overview")
+![Overview](./screenshots/overview.png "Overview")
