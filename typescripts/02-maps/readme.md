@@ -22,4 +22,4 @@ $npm start
 
 ### Overview
 
-![Overview](./screenshots/overview.png "Overview")
+![Overview](/typescripts/02-maps/screenshots/overview.png "Overview")
