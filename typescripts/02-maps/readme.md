@@ -21,5 +21,4 @@ $npm start
 ## Screenshot
 
 ### Overview
-
-![Overview](/screenshots/overview.png "Overview")
+![Overview](./screenshots/overview.PNG?raw=true "Overview")
