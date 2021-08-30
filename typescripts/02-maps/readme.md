@@ -21,6 +21,4 @@ $npm start
 ## Screenshot
 
 ### Overview
-
-![Overview](/typescripts/02-maps/screenshots/overview.PNG?raw=true "Overview")
 ![Overview](./screenshots/overview.PNG?raw=true "Overview")
