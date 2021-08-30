@@ -1,0 +1,21 @@
+{
+  "name": "02-maps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html --port 3000 --hmr-port 3001",
+    "build": "parcel build index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/faker": "^5.5.8",
+    "@types/googlemaps": "^3.43.3",
+    "parcel-bundler": "^1.12.5",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "faker": "^5.5.3"
+  }
+}
