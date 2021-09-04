@@ -109,3 +109,10 @@ export async function getServerSideProps(context) {
   }
 }
 ```
+
+## Support Redux
+
+### Install
+``` bash
+$npm i redux redux-thunk redux-devtools-extension react-redux next-redux-wrapper
+```
