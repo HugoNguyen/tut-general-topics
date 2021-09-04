@@ -1,14 +1,21 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import Pagination from 'react-js-pagination';
+import { useRouter } from 'next/router';
+
 import RoomItem from './room/RoomItem';
 
 import { clearErrors } from '../redux/actions/roomActions';
 
 const Home = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
 
-    const { rooms, error } = useSelector(state => state.allRooms);
+    const { rooms, resPerPage, roomsCount, filteredRoomsCount, error } = useSelector(state => state.allRooms);
+
+    let { page = 1 } = router.query;
+    page = Number(page);
 
     React.useEffect(() => {
         if (error) {
@@ -17,7 +24,12 @@ const Home = () => {
         }
     }, []);
 
-    return (
+
+    const handlePagination = (pageNumber) => {
+        window.location.href = `/?page=${pageNumber}`;
+    }
+
+    return (<>
         <section id="rooms" className="container mt-5">
 
             <h2 className='mb-3 ml-2 stays-heading'>Stays in New York</h2>
@@ -32,9 +44,26 @@ const Home = () => {
                 }
 
             </div>
-
         </section>
-    )
+      
+        {resPerPage < roomsCount &&
+            <div className="d-flex justify-content-center mt-5">
+                <Pagination
+                    activePage={page}
+                    itemsCountPerPage={resPerPage}
+                    totalItemsCount={roomsCount}
+                    onChange={handlePagination}
+                    nextPageText={'Next'}
+                    prevPageText={'Prev'}
+                    firstPageText={'First'}
+                    lastPageText={'Last'}
+                    itemClass='page-item'
+                    linkClass='page-link'
+                />
+            </div>
+        }
+
+    </>)
 }
 
 export default Home;
