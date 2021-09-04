@@ -110,6 +110,19 @@ export async function getServerSideProps(context) {
 }
 ```
 
+## Using next/image
+> [Usage](https://nextjs.org/docs/messages/next-image-unconfigured-host)
+
+``` js
+// next.config.js
+module.exports = {
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
+}
+
+```
+
 ## Support Redux
 
 ### Install
