@@ -3,6 +3,10 @@ import Head from "next/head";
 import Header from "./Header";
 import Footer from "./Footer";
 
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const Layout = ({ children, title='Book Best Hotels for your Holiday' }) => {
     return (
         <div>
@@ -14,6 +18,7 @@ const Layout = ({ children, title='Book Best Hotels for your Holiday' }) => {
             </Head>
 
             <Header />
+            <ToastContainer position="bottom-right" />
             {children}
             <Footer />
         </div>
