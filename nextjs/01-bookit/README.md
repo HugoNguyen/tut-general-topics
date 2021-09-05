@@ -11,6 +11,15 @@ $docker-compose up -d
 $npm run dev
 ```
 
+3. Package for Authentication
+``` bash
+$npm i validator bcryptjs
+$npm i next-auth
+```
+
+4. Cloudinary account
+name: hugo-dev-vn
+
 # Nextjs
 
 ## [Custom Document](https://nextjs.org/docs/advanced-features/custom-document)
@@ -129,3 +138,15 @@ module.exports = {
 ``` bash
 $npm i redux redux-thunk redux-devtools-extension react-redux next-redux-wrapper
 ```
+
+## Next-Auth.js
+
+### Setup
+
+To add NextAuth.js to a project create a file called [...nextauth].js in pages/api/auth. NextAuth.js requires no modification to the next.config.js file.
+
+All requests to /api/auth/* (signin, callback, signout, etc) will automatically be handed by NextAuth.js.
+
+### Config [...nextauth].js
+1. Setup provider
+2. Set jwt
