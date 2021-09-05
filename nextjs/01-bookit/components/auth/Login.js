@@ -58,7 +58,9 @@ const Login = () => {
                             />
                         </div>
 
-                        <a href="#" className="float-right mb-4">Forgot Password?</a>
+                        <Link href="/password/forgot" className="float-right mb-4">
+                            Forgot Password?
+                        </Link>
 
                         <button
                             id="login_button"

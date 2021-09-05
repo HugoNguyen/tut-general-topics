@@ -20,6 +20,11 @@ $npm i next-auth
 4. Cloudinary account
 name: hugo-dev-vn
 
+5. MailTrap
+```bash
+$npm i nodemailer
+```
+
 # Nextjs
 
 ## [Custom Document](https://nextjs.org/docs/advanced-features/custom-document)
@@ -150,3 +155,85 @@ All requests to /api/auth/* (signin, callback, signout, etc) will automatically 
 ### Config [...nextauth].js
 1. Setup provider
 2. Set jwt
+
+## Protect routes, using getServerSideProps()
+
+* Example 1: Protect page update user profile. If not login, redirect to login page
+```js
+// Protect => pages/me/updatejs
+// If not logined, redirect to login page
+
+export async function getServerSideProps(context) {
+    const session = await getSession({ req: context.req });
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            }
+        }
+    }
+
+    return {
+        props: { session }
+    }
+}
+
+```
+
+* Example 2: If user logined, prevent user access page Login or Register again. In this case, redirect user to home page
+
+```js
+// pages/login.js
+// pages/register.js
+
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req });
+
+  if (session) {
+      return {
+          redirect: {
+              destination: '/',
+              permanent: false,
+          }
+      }
+  }
+
+  return {
+      props: { session }
+  }
+}
+
+```
+
+## Strategy of Forgot Password
+
+1. Go to ForgotPassword page
+``` js
+// pages/password/forgot.js
+```
+
+2. Submitting user email need to recover password
+``` js
+// submit to /api/password/forgot
+await axios.post(`/api/password/forgot`, email, config);
+```
+3. API forgot password handler
+- Generate resetPasswordToken, restPasswordExpired
+- Genereate resetPasswordUrl from resetPasswordToken
+``` js
+const resetUrl = `${origin}/password/reset/${resetToken}`;
+```
+
+- Send resetPasswordUrl to user email
+
+4. User open resetPasswordUrl, attached in email send from forgot password handler
+```js
+// pages/password/reset/[token].js
+```
+
+5. Input new password, then submit
+``` js
+// submit to /api/password/reset/:token
+```
