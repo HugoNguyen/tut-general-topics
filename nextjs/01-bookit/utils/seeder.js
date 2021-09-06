@@ -1,7 +1,7 @@
 // Error:  Cannot use import statement outside a module
-// import Room from '../models/rooms';
+// import Room from '../models/room';
 const mongoose = require('mongoose');
-const Room = require('../models/rooms');
+const Room = require('../models/room');
 const rooms = require('../data/rooms');
 
 mongoose.connect(`mongodb://root:root@localhost:27017/bookit?authSource=admin`, {

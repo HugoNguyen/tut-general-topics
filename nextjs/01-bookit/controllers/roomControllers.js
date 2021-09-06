@@ -1,4 +1,4 @@
-import Room from '../models/rooms';
+import Room from '../models/room';
 import ErrorHandler from '../utils/errorHandler';
 import catchAsyncErrors from '../middlewares/catchAsyncError';
 import APIFeatures from '../utils/apiFeatures';
