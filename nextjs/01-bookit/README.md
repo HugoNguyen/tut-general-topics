@@ -25,6 +25,13 @@ name: hugo-dev-vn
 $npm i nodemailer
 ```
 
+6. Stripe
+```bash
+$npm i stripe
+$npm i @stripe/stripe-js
+```
+acc: nguyenquoctuan61089@gmail.com
+
 # Nextjs
 
 ## [Custom Document](https://nextjs.org/docs/advanced-features/custom-document)
@@ -237,3 +244,92 @@ const resetUrl = `${origin}/password/reset/${resetToken}`;
 ``` js
 // submit to /api/password/reset/:token
 ```
+
+
+# Stripe
+
+## [About Webhook](https://stripe.com/docs/webhooks)
+
+### Setup for local test
+1. Install StripeCLI
+- Download the latest linux tar.gz file from https://github.com/stripe/stripe-cli/releases/latest
+- Copy file stripe_X.X.X_linux_x86_64.tar.gz/stripe to /usr/local/bin
+- Set exce
+$chmod 777 stripe
+$stripe -v
+
+* Opt 2, docker
+```yml
+  stripe:
+    image : stripe/stripe-cli:latest
+    volumes:
+      - ./.stripe:/root/.config/stripe
+```
+
+2. Login
+$stripe login
+
+* With docker
+```bash
+$docker-compose run stripe login
+
+Your pairing code is: vivid-neatly-helped-smile
+This pairing code verifies your authentication with Stripe.
+To authenticate with Stripe, please go to: https://dashboard.stripe.com/stripecli/confirm_auth?t=rsMB3NzDgj4p8iazp5wJBmZLyMAVRxec
+> Done! The Stripe CLI is configured for Hugo-Dev-Vn with account id acct_1JRB2gEwfPm4lLW0
+
+Please note: this key will expire after 90 days, at which point you'll need to re-authenticate.
+```
+
+
+3. Listen
+$stripe listen --events checkout.session.completed --forward-to localhost:3000/api/webhook
+
+After this on, on Stripe/Dashboard/Webhook, an device will be added
+
+And a webhook signing secrect
+
+* Op with docker
+```bash
+$docker-compose run stripe listen --events checkout.session.completed --forward-to host.docker.internal:3000/api/webhook
+```
+
+4. Copy webhook signing secrect to next.config.js
+```js
+module.exports = {
+  reactStrictMode: true,
+  env: {
+    // Others configs
+  
+    STRIPE_WEBHOOK_SECRET: 'whsec_GVrrzL4t5pFFmTM2hfll8dgtgPN6BQ9q',
+}
+
+```
+
+
+## Flow payment, checkout
+1. User login
+2. Pick a room
+3. Pick checkin && checkout date
+4. System check 'checkin' & 'checkout' is avaible or not
+```js
+//bookingActions.js -> checkBooking()
+let link = `/api/bookings/check?roomId=${roomId}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`;
+const { data } = await axios.get(link);
+```
+
+5. Room avaible, user pay. Click pay redirect to page https://stripe/checkout?....
+- Get stripe session
+```js
+const sessionId = `/api/checkout_session/${id}?checkInDate=${checkInDate.toISOString()}&checkOutDate=${checkOutDate.toISOString()}&daysOfStay=${daysOfStay}`;
+
+// Redirect to checkout
+stripe.redirectToCheckout({ sessionId: data.id });
+```
+
+6. Fill card info, then submit
+- Stripe process payment, then post a completed webhook to
+'/api/webhook'
+
+7. On webhook receive
+- Create new booking with status is paid
