@@ -34,7 +34,7 @@ yarn-error.log*
 .vercel
 
 # mongo
-database
+.database
 
 #.stripe
 .stripe
