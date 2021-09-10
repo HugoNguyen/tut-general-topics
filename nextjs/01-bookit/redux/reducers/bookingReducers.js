@@ -9,6 +9,13 @@ import {
     MY_BOOKINGS_FAIL,
     BOOKING_DETAILS_SUCCESS,
     BOOKING_DETAILS_FAIL,
+    ADMIN_BOOKINGS_REQUEST,
+    ADMIN_BOOKINGS_SUCCESS,
+    ADMIN_BOOKINGS_FAIL,
+    DELETE_BOOKING_REQUEST,
+    DELETE_BOOKING_SUCCESS,
+    DELETE_BOOKING_RESET,
+    DELETE_BOOKING_FAIL,
     CLEAR_ERRORS
 
 } from '../constants/bookingConstants';
@@ -79,13 +86,21 @@ export const bookedDatesReducer = (state = { dates: [] }, action) => {
 
 export const bookingsReducer = (state = { bookings: [] }, action) => {
     switch (action.type) {
+
+        case ADMIN_BOOKINGS_REQUEST:
+            return {
+                loading: true,
+            }
+
         case MY_BOOKINGS_SUCCESS:
+        case ADMIN_BOOKINGS_SUCCESS:
             return {
                 loading: false,
                 bookings: action.payload
             }
 
         case MY_BOOKINGS_FAIL:
+        case ADMIN_BOOKINGS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -111,6 +126,43 @@ export const bookingDetailsReducer = (state = { booking: {} }, action) => {
             }
 
         case BOOKING_DETAILS_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const bookingReducer = (state = {}, action) => {
+    switch (action.type) {
+
+        case DELETE_BOOKING_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DELETE_BOOKING_SUCCESS:
+            return {
+                loading: false,
+                isDeleted: action.payload
+            }
+
+        case DELETE_BOOKING_RESET:
+            return {
+                loading: false,
+                isDeleted: false
+            }
+
+        case DELETE_BOOKING_FAIL:
             return {
                 loading: false,
                 error: action.payload
