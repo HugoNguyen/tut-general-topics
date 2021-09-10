@@ -1,3 +1,4 @@
+import getConfig from "next/config";
 import Room from '../models/room';
 import User from '../models/user';
 import Booking from '../models/booking';
@@ -6,7 +7,10 @@ import getRawBody from 'raw-body';
 import catchAsyncErrors from '../middlewares/catchAsyncError';
 import absoluteUrl from 'next-absolute-url';
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+// Config
+const { serverRuntimeConfig: { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET } } = getConfig();
+
+const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
 // Generate stripe checkout session   =>   /api/checkout_session/:roomId
 const stripeCheckoutSession = catchAsyncErrors(async (req, res) => {
@@ -51,7 +55,7 @@ const webhookCheckout = catchAsyncErrors(async (req, res) => {
 
         const signature = req.headers['stripe-signature']
 
-        const event = stripe.webhooks.constructEvent(rawBody, signature, process.env.STRIPE_WEBHOOK_SECRET);
+        const event = stripe.webhooks.constructEvent(rawBody, signature, STRIPE_WEBHOOK_SECRET);
 
         if (event.type === 'checkout.session.completed') {
 

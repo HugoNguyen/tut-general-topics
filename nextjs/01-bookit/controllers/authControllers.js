@@ -1,3 +1,4 @@
+import getConfig from "next/config";
 import User from '../models/user';
 import cloudinary from 'cloudinary';
 import ErrorHandler from '../utils/errorHandler';
@@ -6,11 +7,14 @@ import sendEmail from '../utils/sendEmail';
 import absoluteUrl from 'next-absolute-url';
 import crypto from 'crypto';
 
+// Config
+const { serverRuntimeConfig: { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_SECRET_KEY } } = getConfig();
+
 // Setting up cloudinary config
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_SECRET_KEY,
+    cloud_name: CLOUDINARY_CLOUD_NAME,
+    api_key: CLOUDINARY_API_KEY,
+    api_secret: CLOUDINARY_SECRET_KEY,
 });
 
 // Register user => /api/auth/register
