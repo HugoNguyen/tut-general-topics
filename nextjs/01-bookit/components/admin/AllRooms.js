@@ -1,5 +1,5 @@
   
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -20,9 +20,11 @@ const AllRooms = () => {
     const { loading, error, rooms } = useSelector(state => state.allRooms)
     const { error: deleteError, isDeleted } = useSelector(state => state.room)
 
-    useEffect(() => {
+    React.useEffect(() => {
+        dispatch(getAdminRooms());
+    }, [dispatch]);
 
-        dispatch(getAdminRooms())
+    React.useEffect(() => {
 
         if (error) {
             toast.error(error);
@@ -39,7 +41,7 @@ const AllRooms = () => {
             dispatch({ type: DELETE_ROOM_RESET })
         }
 
-    }, [dispatch, deleteError, isDeleted])
+    }, [dispatch, error, router, deleteError, isDeleted]);
 
     const setRooms = () => {
         const data = {

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useRouter } from 'next/router';
 
@@ -26,7 +27,7 @@ const Profile = () => {
     const [avatar, setAvatar] = React.useState('');
     const [avatarPreview, setAvatarPreview] = React.useState('/images/default_avatar.jpg');
 
-    const { user: loadedUser, loading } = useSelector(state => state.auth);
+    const { user: loadedUser, loading } = useSelector(state => state.loadedUser)
     const { error, isUpdated, loading: updateLoading } = useSelector(state => state.user);
 
     React.useEffect(() => {
@@ -47,7 +48,7 @@ const Profile = () => {
             router.push('/');
             dispatch({ type: UPDATE_PROFILE_RESET });
         }
-    }, [dispatch, isUpdated, error, loadedUser]);
+    }, [dispatch, router, isUpdated, error, loadedUser]);
 
     const submitHandler = (e) => {
         e.preventDefault();

@@ -37,9 +37,13 @@ const RoomDetails = () => {
     const [paymentLoading, setPaymentLoading] = React.useState(false);
 
     const excludedDates = [];
-    dates.forEach(date => {
-        excludedDates.push(new Date(date));
-    });
+
+    if (dates) {
+        dates.forEach(date => {
+            excludedDates.push(new Date(date));
+        });
+    }
+    
 
     const onChange = (dates) => {
         const [ciDate, coDate] = dates;
@@ -109,7 +113,6 @@ const RoomDetails = () => {
     }
 
     React.useEffect(() => {
-
         dispatch(getBookedDates(id));
 
         if (error) {
@@ -120,7 +123,7 @@ const RoomDetails = () => {
         return () => {
             dispatch({ type: CHECK_BOOKING_RESET });
         }
-    }, [dispatch, id]);
+    }, [dispatch, error, id, room]);
 
     return (<>
         <Head>

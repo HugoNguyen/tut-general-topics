@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import ButtonLoader from '../layout/ButtonLoader';
 
@@ -44,7 +45,7 @@ const NewRoom = () => {
             dispatch({ type: NEW_ROOM_RESET });
         }
 
-    }, [dispatch, error, success]);
+    }, [dispatch, router, error, success]);
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -273,7 +274,7 @@ const NewRoom = () => {
 
                             {imagesPreview.map(img => (
 
-                                <img
+                                <Image
                                     src={img}
                                     key={img}
                                     alt="Images Preview"

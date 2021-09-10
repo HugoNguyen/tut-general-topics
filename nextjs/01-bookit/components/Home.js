@@ -23,7 +23,7 @@ const Home = () => {
             toast.error(error);
             dispatch(clearErrors);
         }
-    }, []);
+    }, [dispatch, error]);
 
 
     const handlePagination = (pageNumber) => {

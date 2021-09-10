@@ -13,15 +13,17 @@ import { DELETE_USER_RESET } from '../../redux/constants/userConstants';
 
 const AllUsers = () => {
 
-    const dispatch = useDispatch()
-    const router = useRouter()
+    const dispatch = useDispatch();
+    const router = useRouter();
 
     const { loading, error, users } = useSelector(state => state.allUsers)
     const { error: deleteError, isDeleted } = useSelector(state => state.user)
 
     React.useEffect(() => {
+        dispatch(getAdminUsers());
+    }, [dispatch]);
 
-        dispatch(getAdminUsers())
+    React.useEffect(() => {
 
         if (error) {
             toast.error(error);
@@ -38,7 +40,7 @@ const AllUsers = () => {
             dispatch({ type: DELETE_USER_RESET })
         }
 
-    }, [dispatch, error, isDeleted])
+    }, [dispatch, router, error, deleteError, isDeleted]);
 
 
     const setUsers = () => {

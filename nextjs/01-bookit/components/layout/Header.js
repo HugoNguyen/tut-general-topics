@@ -1,5 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from '../../redux/actions/userActions';
@@ -24,13 +26,14 @@ const Header = () => {
                 <div className="col-3 p-0">
                     <div className="navbar-brand">
                         <Link href='/'>
-                            <img style={{ cursor: 'pointer' }} src="/images/bookit_logo.png" alt="BookIT" />
+                            <a>
+                                <img style={{ cursor: 'pointer', height: '100%' }} src="/images/bookit_logo.png" alt="BookIT"/>
+                            </a>
                         </Link>
                     </div>
                 </div>
 
                 <div className="col-3 mt-3 mt-md-0 text-center">
-
                     {user ? (
                         <div className="ml-4 dropdown d-line">
                             <a

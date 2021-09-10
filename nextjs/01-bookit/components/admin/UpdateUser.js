@@ -26,8 +26,9 @@ const UpdateUser = () => {
     React.useEffect(() => {
 
         if (user && user._id !== userId) {
-            dispatch(getUserDetails(userId))
+            dispatch(getUserDetails(userId));
         } else {
+            console.log(user);
             setName(user.name)
             setEmail(user.email)
             setRole(user.role)
@@ -43,7 +44,7 @@ const UpdateUser = () => {
             dispatch({ type: UPDATE_USER_RESET })
         }
 
-    }, [dispatch, isUpdated, userId, user, error]);
+    }, [dispatch, router, isUpdated, userId, user, error]);
 
 
     const submitHandler = (e) => {

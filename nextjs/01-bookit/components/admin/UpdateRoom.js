@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import ButtonLoader from '../layout/ButtonLoader';
 import Loader from '../layout/Loader';
@@ -73,7 +74,7 @@ const UpdateRoom = () => {
             dispatch({ type: UPDATE_ROOM_RESET })
         }
 
-    }, [dispatch, error, roomDetailsError, isUpdated, room, id]);
+    }, [dispatch, router, error, roomDetailsError, isUpdated, room, id]);
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -307,7 +308,7 @@ const UpdateRoom = () => {
 
                                 {imagesPreview.map(img => (
 
-                                    <img
+                                    <Image
                                         src={img}
                                         key={img}
                                         alt="Images Preview"
@@ -319,7 +320,7 @@ const UpdateRoom = () => {
                                 ))}
 
                                 {oldImages && oldImages.map(img => (
-                                    <img
+                                    <Image
                                         src={img.url}
                                         key={img.public_id}
                                         alt="Images Preview"

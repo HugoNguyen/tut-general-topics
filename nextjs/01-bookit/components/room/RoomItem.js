@@ -11,6 +11,7 @@ const RoomItem = ({ room }) => {
                     src={room.images[0].url}
                     height={170}
                     width='100%'
+                    alt={room.name}
                 />
                 <div className="card-body d-flex flex-column">
                     <h5 className="card-title">

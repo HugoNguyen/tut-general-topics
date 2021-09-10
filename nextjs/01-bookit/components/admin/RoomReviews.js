@@ -19,17 +19,17 @@ const RoomReviews = () => {
     const { error: deleteError, isDeleted } = useSelector(state => state.review);
 
     React.useEffect(() => {
+        if (roomId !== '' && !error) {
+            dispatch(getRoomReviews(roomId));
+        }
+    }, [dispatch, error, roomId]);
+
+    React.useEffect(() => {
 
         if (error) {
             toast.error(error);
             setRoomId('');
             dispatch(clearErrors());
-           
-        }
-
-        if (roomId !== '' && !loading && !error) {
-            console.log('roomId', roomId, loading);
-            dispatch(getRoomReviews(roomId));
         }
 
         if (deleteError) {
@@ -42,7 +42,7 @@ const RoomReviews = () => {
             dispatch({ type: DELETE_REVIEW_RESET })
         }
 
-    }, [dispatch, error, roomId, deleteError, isDeleted])
+    }, [dispatch, error, deleteError, isDeleted]);
 
 
     const setReviews = () => {

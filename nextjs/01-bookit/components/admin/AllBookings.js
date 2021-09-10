@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -21,9 +21,11 @@ const AllBookings = () => {
     const { bookings, error, loading } = useSelector(state => state.bookings)
     const { isDeleted, error: deleteError } = useSelector(state => state.booking)
 
-    useEffect(() => {
+    React.useEffect(() => {
+        dispatch(getAdminBookings());
+    }, [dispatch]);
 
-        dispatch(getAdminBookings())
+    React.useEffect(() => {
 
         if (error) {
             toast.error(error);
@@ -41,7 +43,7 @@ const AllBookings = () => {
         }
 
 
-    }, [dispatch, deleteError, isDeleted])
+    }, [dispatch, error, deleteError, isDeleted, router]);
 
 
     const setBookings = () => {
