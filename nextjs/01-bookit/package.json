@@ -1,0 +1,46 @@
+{
+  "name": "01-bookit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seeder": "node utils/seeder.js"
+  },
+  "dependencies": {
+    "@stripe/stripe-js": "^1.17.1",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.26.3",
+    "easyinvoice": "^1.0.144",
+    "mdbreact": "^5.1.0",
+    "moment": "^2.29.1",
+    "moment-range": "^4.0.2",
+    "mongoose": "^6.0.4",
+    "next": "11.1.2",
+    "next-absolute-url": "^1.2.2",
+    "next-auth": "^3.29.0",
+    "next-connect": "^0.10.2",
+    "next-redux-wrapper": "^7.0.4",
+    "nodemailer": "^6.6.3",
+    "raw-body": "^2.4.1",
+    "react": "17.0.2",
+    "react-bootstrap": "^1.6.1",
+    "react-datepicker": "^4.2.1",
+    "react-dom": "17.0.2",
+    "react-js-pagination": "^3.0.3",
+    "react-redux": "^7.2.4",
+    "react-toastify": "^8.0.2",
+    "redux": "^4.1.1",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0",
+    "stripe": "^8.174.0",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.2"
+  }
+}

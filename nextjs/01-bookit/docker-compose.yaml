@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  mongodb:
+    image : mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - ./.database:/data/db
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+  mongo-express:
+    image: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongodb:27017/
+  client:
+    image: hugo2908/nextjs-01-bookit
+    restart: unless-stopped
+    volumes:
+      - ./.env.docker.local:/app/.env.local
+    ports:
+      - 3000:3000
+  stripe:
+    image : stripe/stripe-cli:latest
+    profiles:
+      - tool
+    volumes:
+      - ./.stripe:/root/.config/stripe
+    command: listen --events checkout.session.completed --forward-to client:3000/api/webhook
