@@ -3,7 +3,7 @@ name: nextjs/01-bookit
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'nextjs/01-bookit/**'
 
