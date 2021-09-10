@@ -19,10 +19,17 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:root@mongodb:27017/
-  # stripe:
-  #   image : stripe/stripe-cli:latest
-  #   volumes:
-  #     - ./.stripe:/root/.config/stripe
-    # command: listen --api-key sk_test_51JRB2gEwfPm4lLW0bXuety3Vof2yayqhZd4CoZHIwVls6w44ri9nRdX3GKYi7KHMbQKD1JgLBltpK3peNYEQzFBp00HzBqTolw \
-    #           --device-name ${STRIPE_DEVICE_NAME} \
-    #           --forward-to next-app:3000/api/webhook
+  client:
+    image: hugo2908/nextjs-01-bookit
+    restart: unless-stopped
+    volumes:
+      - ./.env.docker.local:/app/.env.local
+    ports:
+      - 3000:3000
+  stripe:
+    image : stripe/stripe-cli:latest
+    profiles:
+      - tool
+    volumes:
+      - ./.stripe:/root/.config/stripe
+    command: listen --events checkout.session.completed --forward-to client:3000/api/webhook
