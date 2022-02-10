@@ -26,7 +26,7 @@ namespace bookstoreapp.blazor.server.ui.Providers
 
             var tokenContent = _jwtSecurityTokenHandler.ReadJwtToken(savedToken);
 
-            if(tokenContent.ValidTo < DateTime.Now)
+            if(tokenContent.ValidTo < DateTime.UtcNow)
             {
                 return new AuthenticationState(user);
             }
