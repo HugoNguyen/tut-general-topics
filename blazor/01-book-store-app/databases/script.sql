@@ -16,7 +16,7 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Books' and xtype='U' )
         [Year] INT NULL,
         [ISBN] NVARCHAR(50) NOT NULL UNIQUE,
         [Summary] NVARCHAR(250) NULL,
-        [Image] NVARCHAR(50) NULL,
+        [Image] NVARCHAR(250) NULL,
         [Price] DECIMAL(18,2) NULL,
         [AuthorId] INT NULL,
         CONSTRAINT [FK_Books_Authors] FOREIGN KEY ([AuthorId]) REFERENCES [Authors]([Id])

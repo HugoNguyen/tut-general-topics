@@ -22,12 +22,14 @@ namespace bookstoreapp.api.Controllers
         private readonly BookStoreDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<AuthorsController> _logger;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public BooksController(BookStoreDbContext context, IMapper mapper, ILogger<AuthorsController> logger)
+        public BooksController(BookStoreDbContext context, IMapper mapper, ILogger<AuthorsController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _mapper = mapper;
             _logger = logger;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: api/Books
@@ -97,7 +99,20 @@ namespace bookstoreapp.api.Controllers
                 return NotFound();
             }
 
+            if (string.IsNullOrEmpty(bookDto.ImageData) == false)
+            {
+                bookDto.Image = CreateFile(bookDto.ImageData, bookDto.OriginalImageName);
+
+                var picName = Path.GetFileName(book.Image);
+                var path = $"{_webHostEnvironment.WebRootPath}\\bookcoverimages\\{picName}";
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+            }
+
             _mapper.Map(bookDto, book);
+            
             _context.Entry(book).State = EntityState.Modified;
 
             try
@@ -129,6 +144,10 @@ namespace bookstoreapp.api.Controllers
             try
             {
                 var book = _mapper.Map<Book>(bookDto);
+                if (string.IsNullOrEmpty(bookDto.ImageData) == false)
+                {
+                    book.Image = CreateFile(bookDto.ImageData, bookDto.OriginalImageName);
+                }
                 await _context.Books.AddAsync(book);
                 await _context.SaveChangesAsync();
 
@@ -164,7 +183,23 @@ namespace bookstoreapp.api.Controllers
             {
                 _logger.LogError(ex, $"Error Performing DELETE in {nameof(DeleteBook)}");
                 return StatusCode(500, Messages.Error500Message);
+            } 
+        }
+
+        private string CreateFile(string imageBase64, string imageName)
+        {
+            var url = HttpContext.Request.Host.Value;
+            var ext = Path.GetExtension(imageName);
+            var fileName = $"{Guid.NewGuid()}{ext}";
+            var path = $"{_webHostEnvironment.WebRootPath}\\bookcoverimages\\{fileName}";
+            byte[] image = Convert.FromBase64String(imageBase64);
+
+            using (var fileStream = System.IO.File.Create(path))
+            {
+                fileStream.Write(image, 0, image.Length);
             }
+
+            return $"https://{url}/bookcoverimages/{fileName}";
         }
 
         private async Task<bool> BookExistsAsync(int id)
