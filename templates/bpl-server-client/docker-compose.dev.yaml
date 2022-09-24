@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  backend:
+    image: bpl_server_client-backend:dev
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    command: npm run start:dev
+    volumes:
+      ## 1. if local machine have install node, uncomment these lines below
+      #- ./server:/usr/app
+      ## 2. if not, just mount source code
+      - ./server/public:/usr/app/public
+      - ./server/src:/usr/app/src
+  frontend:
+    image: bpl_server_client-client:dev
+    build:
+      context: ./fe-reactjs
+      dockerfile: Dockerfile.dev  
+    volumes:
+      ## 1. if local machine have install node, uncomment these lines below
+      #- ./client:/usr/app
+      ## 2. if not, just mount source code
+      - ./client/public:/usr/app/public
+      - ./client/src:/usr/app/src
+  proxy:
+    environment:
+      - BACKEND_UP=backend
+      - FRONTEND_UP=frontend:3000
+

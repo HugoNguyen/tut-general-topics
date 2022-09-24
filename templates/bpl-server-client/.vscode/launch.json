@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // Name of the configuration
+            "name": "Backend | Docker: Attach to Node",
+            // Type of application to attach to
+            "type": "node",
+            // Type of request. In this case 'attach'
+            "request": "attach",
+            // Restart the debugger whenever it gets disconnected
+            "restart": true,
+            //  Port to connect to 
+            "port": 9229,
+            // "address": "localhost",
+            "localRoot": "${workspaceFolder}/server",
+            "remoteRoot": "/usr/src/app",
+        }
+    ]
+}
