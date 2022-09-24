@@ -1,0 +1,30 @@
+version: "3.3"
+
+services:
+  backend:
+    image: bpl_server_client-backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+  frontend:
+    image: bpl_server_client-client
+    build:
+      context: ./fe-reactjs
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - backend
+  proxy:
+    image: nginx:1.22-alpine
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - BACKEND_UP=backend
+      - FRONTEND_UP=frontend
+    volumes: 
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+    depends_on:
+      - backend
+      - frontend
