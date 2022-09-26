@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [cars, setCars] = useState([]);
+  const [cars, setCars] = React.useState<{ name: string, color: string }[]>([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     // /api -> proxy
     // localhost:3001 -> backend
     fetch(`/api/cars`)
