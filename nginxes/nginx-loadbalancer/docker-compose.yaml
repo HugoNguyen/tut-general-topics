@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+  backend1:
+    image: nginx:1.22
+    volumes:
+      - ./server01/public:/usr/share/nginx/html
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+    environment:
+      - BACKEND_NAME=backend1
+  backend2:
+    image: nginx:1.22
+    volumes:
+      - ./server02/public:/usr/share/nginx/html
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+    environment:
+      - BACKEND_NAME=backend2
+  loadbalancer:
+    image: nginx:1.22-alpine
+    ports:
+      - "3000:80"
+    environment:
+      - BACKEND_UP_01=backend1
+      - BACKEND_UP_02=backend2
+    volumes: 
+      - ./loadbalancer/round-robin.conf.template:/etc/nginx/templates/default.conf.template
+      # - ./loadbalancer/least-conn.conf.template:/etc/nginx/templates/default.conf.template
+      # - ./loadbalancer/ip-hash.conf.template:/etc/nginx/templates/default.conf.template
+      # - ./loadbalancer/sl-cookie-sticky.conf.template:/etc/nginx/templates/default.conf.template
