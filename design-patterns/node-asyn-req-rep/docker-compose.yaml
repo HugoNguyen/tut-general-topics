@@ -1,0 +1,59 @@
+version: "3.3"
+
+services:
+  nats-srv:
+    image: nats:2.9.1-alpine
+    ports:
+      - 8222:8222
+    command: -p 4222 -m 8222 --cluster_name heavy-task-processing
+    restart: unless-stopped
+  longProcessWorker:
+    image: asyn_req_rep-long-processing-worker
+    build:
+      context: ./long-processing-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - PORT=80
+      - DEFAULT_SLEEP_TIME_MS=15000
+      - NATS_URL=nats://nats-srv:4222
+      - NATS_CLUSTER_ID=heavy-task-processing
+    command: npm run start:dev
+    volumes:
+      - ./long-processing-service:/usr/app
+  backend:
+    image: asyn_req_rep-backend
+    build:
+      context: ./backend-express
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - PORT=80
+      - NATS_URL=nats://nats-srv:4222
+      - NATS_CLUSTER_ID=heavy-task-processing
+      - WEBSOCKET_PATH=ws-socket-io
+    command: npm run start:dev
+    volumes:
+      - ./backend-express:/usr/app
+  frontend:
+    image: asyn_req_rep-frontend
+    build:
+      context: ./fe-react
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./fe-react:/usr/app
+  proxy:
+    image: nginx:1.22-alpine
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - BACKEND_UP=backend
+      - FRONTEND_UP=frontend:3000
+      - WEBSOCKET_PATH=ws-socket-io
+    volumes:
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template
+    depends_on:
+      - backend
+      - frontend
