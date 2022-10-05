@@ -1,0 +1,62 @@
+
+upstream backend {
+	server ${BACKEND_UP};
+}
+
+upstream frontend {
+	server ${FRONTEND_UP};
+}
+
+
+server {
+    listen 80;
+
+	proxy_set_header   Host $host;
+	proxy_set_header   X-Real-IP $remote_addr;
+	proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header   X-Forwarded-Proto http;
+	proxy_set_header   X-Forwarded-Host $server_name;
+	proxy_set_header   X-Forwarded-Port $server_port;
+	
+	add_header	Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+	add_header X-Frame-Options "SAMEORIGIN";
+	add_header X-Content-Type-Options nosniff;
+
+	# angular
+	location /sockjs-node {
+		proxy_pass $scheme://frontend/sockjs-node;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection 'upgrade';
+		proxy_set_header Host $host;
+		proxy_cache_bypass $http_upgrade;
+	}
+
+	# react
+	location /ws {
+		proxy_pass $scheme://frontend/ws;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection 'upgrade';
+		proxy_set_header Host $host;
+		proxy_cache_bypass $http_upgrade;
+	}
+
+	# ws
+	location /${WEBSOCKET_PATH} {
+		proxy_pass $scheme://backend;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection 'upgrade';
+		# Pass custom header
+		# proxy_set_header X-CONNECTION-ID $proxy_add_x_connection_id;
+	}
+
+    location /api {
+		proxy_pass         http://backend/api;
+	}
+
+    location / {
+		proxy_pass         http://frontend;
+	}
+}
