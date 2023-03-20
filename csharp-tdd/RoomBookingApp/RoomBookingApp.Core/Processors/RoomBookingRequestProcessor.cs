@@ -22,6 +22,7 @@ namespace RoomBookingApp.Core.Processors
             }
 
             var availableRooms = _roomBookingService.GetAvailableRooms(bookingRequest.Date);
+            var result = CreateRoomBookingObject<RoomBookingResult>(bookingRequest);
 
             if (availableRooms.Any())
             {
@@ -29,9 +30,15 @@ namespace RoomBookingApp.Core.Processors
                 var roomBooking = CreateRoomBookingObject<RoomBooking>(bookingRequest);
                 roomBooking.RoomId = room.Id;
                 _roomBookingService.Save(roomBooking);
+
+                result.Flag = Enums.BookingResultFlag.Success;
+            }
+            else
+            {
+                result.Flag = Enums.BookingResultFlag.Failure;
             }
 
-            return CreateRoomBookingObject<RoomBookingResult>(bookingRequest);
+            return result;
         }
 
         private TRoomBooking CreateRoomBookingObject<TRoomBooking>(RoomBookingRequest bookingRequest)

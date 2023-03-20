@@ -12,7 +12,10 @@
 => done
 
 5/ Store Booking Record with Room Identifier
+=> done
 
 6/ Return Success Flag on Result
+=> done
+=> instroduce new keywork [Theory], use to providing inlinedata and perform a serie fact test
 
 7/ Add Room Booking Record Id to Result

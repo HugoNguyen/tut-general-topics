@@ -10,6 +10,7 @@ using RoomBookingApp.Core.Processors;
 using Moq;
 using RoomBookingApp.Core.DataServices;
 using RoomBookingApp.Core.Domain;
+using RoomBookingApp.Core.Enums;
 
 namespace RoomBookingApp.Core
 {
@@ -100,6 +101,21 @@ namespace RoomBookingApp.Core
             _availableRooms.Clear();
             _processor.BookRoom(_request);
             _roomBookingServiceMock.Verify(q => q.Save(It.IsAny<RoomBooking>()), Times.Never);
+        }
+
+        [Theory]
+        [InlineData(BookingResultFlag.Failure, false)]
+        [InlineData(BookingResultFlag.Success, true)]
+        public void Should_Return_SuccessOrFailuer_Flag_In_Result(BookingResultFlag bookingSuccessFlag, bool isAvailable)
+        {
+            if (!isAvailable)
+            {
+                _availableRooms.Clear();
+            }
+
+            var result = _processor.BookRoom(_request);
+
+            bookingSuccessFlag.ShouldBe(result.Flag);
         }
     }
 }
