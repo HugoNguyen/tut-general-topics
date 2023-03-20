@@ -31,6 +31,7 @@ namespace RoomBookingApp.Core.Processors
                 roomBooking.RoomId = room.Id;
                 _roomBookingService.Save(roomBooking);
 
+                result.RoomBookingId = roomBooking.Id;
                 result.Flag = Enums.BookingResultFlag.Success;
             }
             else
