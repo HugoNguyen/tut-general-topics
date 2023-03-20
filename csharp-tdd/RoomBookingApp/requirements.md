@@ -6,8 +6,10 @@
 
 3/ Save A Room Booking Record
 => done
+=> Guide to use Mock to test fn logic without implement
 
 4/ Check Room Availability Before Attempting Booking
+=> done
 
 5/ Store Booking Record with Room Identifier
 
