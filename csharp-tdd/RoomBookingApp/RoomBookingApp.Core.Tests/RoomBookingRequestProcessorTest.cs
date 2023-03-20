@@ -30,9 +30,9 @@ namespace RoomBookingApp.Core
                 Date = new DateTime(2000, 1, 1)
             };
 
-            _availableRooms = new List<Room>();
+            _availableRooms = new List<Room>()
             {
-                new Room();
+                new Room { Id = 1 }
             };
 
             _roomBookingServiceMock = new Mock<IRoomBookingService>();
@@ -91,6 +91,7 @@ namespace RoomBookingApp.Core
             savedBooking.FullName.ShouldBe(_request.FullName);
             savedBooking.Email.ShouldBe(_request.Email);
             savedBooking.Date.ShouldBe(_request.Date);
+            savedBooking.RoomId.ShouldBe(_availableRooms.First().Id);
         }
 
         [Fact]
