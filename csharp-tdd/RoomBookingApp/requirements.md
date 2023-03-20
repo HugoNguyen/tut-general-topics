@@ -5,6 +5,7 @@
 => done
 
 3/ Save A Room Booking Record
+=> done
 
 4/ Check Room Availability Before Attempting Booking
 
