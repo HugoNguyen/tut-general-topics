@@ -20,3 +20,9 @@
 
 7/ Add Room Booking Record Id to Result
 => done
+
+8/ Allow User to Book Room. Return Ok Result with Result 
+=> done
+
+9/ Add Validation for Booking and reject bad request
+=> done

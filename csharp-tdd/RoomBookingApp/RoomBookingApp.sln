@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBookingApp.Persistence"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBookingApp.Persistence.Tests", "RoomBookingApp.Persistence.Tests\RoomBookingApp.Persistence.Tests.csproj", "{89368E25-A31E-4E0B-BD5A-09AB9BDB3F86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBookingApp.Api", "RoomBookingApp.Api\RoomBookingApp.Api.csproj", "{949C43F3-609C-4AAA-A487-F02E8CE9F02F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomBookingApp.Api.Test", "RoomBookingApp.Api.Test\RoomBookingApp.Api.Test.csproj", "{AA7C4E3D-D145-4FE1-B8B1-22140632DA2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{89368E25-A31E-4E0B-BD5A-09AB9BDB3F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89368E25-A31E-4E0B-BD5A-09AB9BDB3F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89368E25-A31E-4E0B-BD5A-09AB9BDB3F86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{949C43F3-609C-4AAA-A487-F02E8CE9F02F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{949C43F3-609C-4AAA-A487-F02E8CE9F02F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{949C43F3-609C-4AAA-A487-F02E8CE9F02F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{949C43F3-609C-4AAA-A487-F02E8CE9F02F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA7C4E3D-D145-4FE1-B8B1-22140632DA2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA7C4E3D-D145-4FE1-B8B1-22140632DA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA7C4E3D-D145-4FE1-B8B1-22140632DA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA7C4E3D-D145-4FE1-B8B1-22140632DA2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
