@@ -23,6 +23,12 @@ namespace RoomBookingApp.Persistence
                     new Room { Id = 2, Name = "Conference Room B" },
                     new Room { Id = 3, Name = "Conference Room C" }
                 );
+
+            modelBuilder.Entity<RoomBooking>(entity =>
+            {
+                entity.Property(q => q.FullName).IsRequired(false);
+                entity.Property(q => q.Email).IsRequired(false);
+            });
         }
     }
 }
