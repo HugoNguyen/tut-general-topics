@@ -41,5 +41,29 @@ namespace RoomBookingApp.Persistence.Tests
             availableRooms.ShouldContain(q => q.Id == 3);
             availableRooms.ShouldNotContain(q => q.Id == 1);
         }
+
+        [Fact]
+        public void Should_Save_Room_Booking()
+        {
+            var dbOptions = new DbContextOptionsBuilder<RoomBookingAppDbContext>()
+               .UseInMemoryDatabase("ShouldSaveTest")
+               .Options;
+
+            var roomBooking = new RoomBooking
+            {
+                RoomId = 1,
+                Date = new DateTime(2021, 06, 09)
+            };
+
+            using var context = new RoomBookingAppDbContext(dbOptions);
+            var roomBookingService = new RoomBookingService(context);
+            roomBookingService.Save(roomBooking);
+
+            var bookings = context.RoomBookings.ToList();
+            var booking = bookings.ShouldHaveSingleItem();
+
+            booking.Date.ShouldBe(roomBooking.Date);
+            booking.RoomId.ShouldBe(roomBooking.RoomId);
+        }
     }
 }
