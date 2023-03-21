@@ -6,7 +6,7 @@ using RoomBookingApp.Core.Processors;
 namespace RoomBookingApp.Api.Controllers
 {
     [ApiController]
-    [Route("[controller")]
+    [Route("[controller]")]
     public class RoomBookingController : ControllerBase
     {
         private IRoomBookingRequestProcessor _roomBookingRequestProcessor;
