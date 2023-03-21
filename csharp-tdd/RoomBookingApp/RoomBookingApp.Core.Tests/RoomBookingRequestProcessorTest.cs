@@ -9,7 +9,7 @@ using RoomBookingApp.Core.Models;
 using RoomBookingApp.Core.Processors;
 using Moq;
 using RoomBookingApp.Core.DataServices;
-using RoomBookingApp.Core.Domain;
+using RoomBookingApp.Domain;
 using RoomBookingApp.Core.Enums;
 
 namespace RoomBookingApp.Core

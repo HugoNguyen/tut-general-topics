@@ -1,7 +1,8 @@
 ﻿using RoomBookingApp.Core.DataServices;
-using RoomBookingApp.Core.Domain;
+using RoomBookingApp.Domain;
 using RoomBookingApp.Core.Models;
 using System;
+using RoomBookingApp.Domain.BaseModels;
 
 namespace RoomBookingApp.Core.Processors
 {
