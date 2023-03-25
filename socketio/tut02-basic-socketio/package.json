@@ -1,0 +1,19 @@
+{
+  "name": "tut02-basic-socketio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "basic.js",
+  "scripts": {
+    "start:basic": "nodemon basic.js",
+    "start:chat": "nodemon chat.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.21",
+    "socket.io": "^4.6.1"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "tut03-socket201",
+  "version": "1.0.0",
+  "description": "",
+  "main": "basic.js",
+  "scripts": {
+    "start:chat": "nodemon chat.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.21",
+    "socket.io": "^4.6.1"
+  }
+}
