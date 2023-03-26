@@ -1,0 +1,22 @@
+{
+  "name": "tut05-agarclone",
+  "version": "1.0.0",
+  "description": "- Board: 5000 x 5000 - 5000 orbs - x player",
+  "main": "servers.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "socket.io": "^4.6.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
