@@ -50,6 +50,7 @@ io.sockets.on('connect', socket => {
             socket.emit('tickTock', {
                 playerX: player.playerData.locX,
                 playerY: player.playerData.locY,
+                score: player.playerData.score,
             });
         }, 33);
 
@@ -88,6 +89,8 @@ io.sockets.on('connect', socket => {
                 orbIndex: data,
                 newOrb: orbs[data],
             }
+            // every socket needs to know the leaderBoard has changed
+            io.sockets.emit('updateLeaderBoard', getLeaderBoard());
             io.sockets.emit('orbSwitch', orbData);
         }).catch(() => {
             // catch runs if the reject runs!
@@ -97,12 +100,30 @@ io.sockets.on('connect', socket => {
         // Player collision
         let playerDeath = checkForPlayerCollisions(player.playerData, player.playerConfig, players, player.socketId);
         playerDeath.then(data => {
-            console.log('player collision');
+            // console.log('player collision');
+            // every socket needs to know the leaderBoard has changed
+            io.sockets.emit('updateLeaderBoard', getLeaderBoard());
         }).catch(() => {
             // console.log('no player collision');
         })
     });
 })
+
+function getLeaderBoard() {
+    // sort players in desc order
+    players.sort((a,b) => {
+        return b.score - a.score;
+    });
+
+    let leaderBoard = players.map((currPlayer) => {
+        return {
+            name: currPlayer.name,
+            score: currPlayer.score,
+        }
+    });
+
+    return leaderBoard;
+}
 
 // Run at the begining of a new game
 function initGame() {

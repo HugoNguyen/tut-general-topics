@@ -39,4 +39,17 @@ socket.on('tickTock', data => {
     // uiStuff.players
     player.locX = data.playerX;
     player.locY = data.playerY;
+    player.score = data.score;
+
+    // update score of current player
+    document.querySelector('.player-score').innerText = player.score;
+});
+
+socket.on('updateLeaderBoard', data => {
+    document.querySelector('.leader-board').innerHTML = "";
+    data.forEach((currPlayer) => {
+        document.querySelector('.leader-board').innerHTML +=`
+            <li class="leaderboard-player">${currPlayer.name} - ${currPlayer.score}</li>
+        `
+    })
 });
