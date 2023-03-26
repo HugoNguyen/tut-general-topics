@@ -100,12 +100,30 @@ io.sockets.on('connect', socket => {
         // Player collision
         let playerDeath = checkForPlayerCollisions(player.playerData, player.playerConfig, players, player.socketId);
         playerDeath.then(data => {
-            // console.log('player collision');
+            // console.log('player collision', data);
             // every socket needs to know the leaderBoard has changed
             io.sockets.emit('updateLeaderBoard', getLeaderBoard());
+            
+            // a plaery was absored. Let everyone know!
+            io.sockets.emit('playerDeath', data);
         }).catch(() => {
             // console.log('no player collision');
         })
+    });
+
+    socket.on('disconnect', data => {
+        // find out who just left
+        // make sure the player exists
+        if(player && player.playerData){
+            players.forEach((currPlayer, i) => {
+                // if they match...
+                if(currPlayer.uid === player.playerData.uid) {
+                    players.splice(i, 1);
+                    io.sockets.emit('updateLeaderBoard', getLeaderBoard());
+                }
+            })
+        }
+        
     });
 })
 
