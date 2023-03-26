@@ -14,4 +14,21 @@ function init() {
 socket.on('initReturn', data => {
     // uiStuff.orbs
     orbs = data.orbs;
+    setInterval(() => {
+        // waiting init of player location
+        if(!player.xVector || !player.yVector) {
+            return;
+        }
+        socket.emit('tick', {
+            xVector: player.xVector,
+            yVector: player.yVector,
+        });
+    }, 33);
+});
+
+socket.on('tock', data => {
+    // uiStuff.players
+    players = data.players;
+    player.locX = data.playerX;
+    player.locY = data.playerY;
 });
