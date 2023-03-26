@@ -1,5 +1,7 @@
 // Wher all our main socket stuff will go
 const io = require('../servers').io;
+const checkForOrbCollisions = require('./checkCollisions').checkForOrbCollisions;
+const checkForPlayerCollisions = require('./checkCollisions').checkForPlayerCollisions;
 
 // ==========CLASSES===========
 const Player = require('./classes/Player');
@@ -9,7 +11,7 @@ const Orb = require('./classes/Orb');
 const orbs = [];
 const players = [];
 const settings = {
-    defaultOrbs: 500,
+    defaultOrbs: 50,
     defaultSpeed: 6,
     defaultSize: 6,
     // as player gets bigger, the zoom needs to go out
@@ -19,6 +21,15 @@ const settings = {
 }
 
 initGame();
+
+// issue a message to EVERY connected socket every 30 fps
+setInterval(() => {
+    if(players.length > 0) {
+        io.to('game').emit('tock', {
+            players,
+        });
+    }
+}, 33); // there are 30 33s in 1000 mili, or 1/30th of a second, or 1 of 30fps
 
 io.sockets.on('connect', socket => {
     let player;
@@ -34,20 +45,19 @@ io.sockets.on('connect', socket => {
         // make a master player object to hold both
         player = new Player(socket.id, playerConfig, playerData);
 
-        // issue a message to EVERY connected socket every 30 fps
+        // issue a message to THIS client with it's loc 30/sec
         setInterval(() => {
-            io.to('game').emit('tock', {
-                players,
+            socket.emit('tickTock', {
                 playerX: player.playerData.locX,
                 playerY: player.playerData.locY,
             });
-        }, 33); // there are 30 33s in 1000 mili, or 1/30th of a second, or 1 of 30fps
+        }, 33);
 
         socket.emit('initReturn', { orbs });
         players.push(playerData);
     });
 
-    // the server sent ouver a tick
+    // the client sent over a tick
     // That means we know what direction to move the socket
     socket.on('tick', data => {
         if(!player) return;
@@ -59,14 +69,38 @@ io.sockets.on('connect', socket => {
         const xV = player.playerConfig.xVector = data.xVector;
         const yV = player.playerConfig.yVector = data.yVector;
 
-        if ((player.playerData.locX < 5 && player.playerData.xVector < 0) || (player.playerData.locX > 500) && (xV > 0)) {
+        if ((player.playerData.locX < 5 && player.playerData.xVector < 0) || (player.playerData.locX > settings.worldWidth) && (xV > 0)) {
             player.playerData.locY -= speed * yV;
-        } else if ((player.playerData.locY < 5 && yV > 0) || (player.playerData.locY > 500) && (yV < 0)) {
+        } else if ((player.playerData.locY < 5 && yV > 0) || (player.playerData.locY > settings.worldHeight) && (yV < 0)) {
             player.playerData.locX += speed * xV;
         } else {
             player.playerData.locX += speed * xV;
             player.playerData.locY -= speed * yV;
         }
+
+        // Orbs collision
+        let capturedOrb = checkForOrbCollisions(player.playerData, player.playerConfig, orbs, settings);
+        capturedOrb.then(data => {
+            // then runs if resolve runs! a collision happended!
+            // console.log(`orb collision!!! at ${data}`);
+            // emit to all sockets the orb to replace
+            const orbData = {
+                orbIndex: data,
+                newOrb: orbs[data],
+            }
+            io.sockets.emit('orbSwitch', orbData);
+        }).catch(() => {
+            // catch runs if the reject runs!
+            // console.log("no collision!!!");
+        })
+
+        // Player collision
+        let playerDeath = checkForPlayerCollisions(player.playerData, player.playerConfig, players, player.socketId);
+        playerDeath.then(data => {
+            console.log('player collision');
+        }).catch(() => {
+            // console.log('no player collision');
+        })
     });
 })
 
