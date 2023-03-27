@@ -37,6 +37,19 @@ Req:
 - framhash
 - socket.io-client
 
+### Task
+1/ Get performance data
+- CPU load (current)
+- Memory Usage
+    - free
+    - total
+- OS type
+- uptime
+- CPU info
+    - type
+    - number of cores
+    - clock speed
+
 ## React-client
 
 ## Redis Server
@@ -53,3 +66,4 @@ Req:
 - [Redis.io](https://redis.io/docs/getting-started/)
 - [Node Cluster](https://nodejs.org/api/cluster.html)
 - [Socker.io Load Balancing](https://socket.io/docs/v4/using-multiple-nodes/)
+- [Node Os](https://nodejs.org/api/os.html)
