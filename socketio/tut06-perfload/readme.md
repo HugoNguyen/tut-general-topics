@@ -71,6 +71,10 @@ Master {
     verify message come from Master
     pass connection to worker.server
 
+### Connecting node-client to the socket server
+![client connected](./screenshots/3-node-client-connect.PNG)
+
+![server received](./screenshots/4-server-recieved-a-connection.PNG)
 
 ### Test cluster node
 - Start

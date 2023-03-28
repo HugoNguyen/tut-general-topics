@@ -5,6 +5,12 @@
 // - socket.io-client
 
 const os = require('os');
+const io = require('socket.io-client');
+const socket = io('http://localhost:8000');
+
+socket.on('connect', () => {
+    console.log(`I connected to the socket server!!!!`);
+})
 
 function performanceData(){
     return new Promise(async (resolve, reject)=>{
