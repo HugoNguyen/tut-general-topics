@@ -10,6 +10,31 @@ const socket = io('http://localhost:8000');
 
 socket.on('connect', () => {
     console.log(`I connected to the socket server!!!!`);
+    // we need a way to identify this machine to whomever concered
+    const nI = os.networkInterfaces();
+    let macA;
+    // loop through all the nI for this machine and find a non-internal one
+    for(let key in nI) {
+        if(!nI[key][0].internal){
+            macA = nI[key][0].mac;
+            break;
+        }
+    }
+
+    // client auth with single key value
+    socket.emit('clientAuth', 'clients-abczyz123456');
+
+    // start sending over data on interval
+    let perfDataInterval = setInterval(() => {
+        performanceData().then(allPerformanceData => {
+            // console.log(allPerformanceData);
+            socket.emit('perfData', allPerformanceData);
+        })
+    }, 1000);
+
+    socket.on('disconnect', () => {
+        clearInterval(perfDataInterval);
+    });
 })
 
 function performanceData(){
@@ -80,6 +105,6 @@ function getCpuLoad(){
     })
 }
 
-performanceData().then((allPerformanceData)=>{
-    console.log(allPerformanceData)
-})
+// performanceData().then((allPerformanceData)=>{
+//     console.log(allPerformanceData)
+// })
