@@ -30,6 +30,67 @@ Req:
 - socket.io
 - socket.io-redis
 - farmhash
+- node 17x
+
+## How it work
+### Diagram
+Worker {
+    onExit: fn(),
+    onMessage: fn(message, connection), // listen message from Master
+    server: ExpressServer {
+        port, // default is 0, not expose to outsite
+    }, // HttpServer
+    socketIoServer: SocketIoServer,
+
+}
+
+Master {
+    workers: Worker [],
+    getWorkerIndex: fn(IpAddress), // a hash fn return index of a worker base on IP Address
+    server: TcpServer {
+        port, // tpc listen port
+    },
+    onConnection: fn(connection: net.Socket),
+}
+
+### Cluster Master
+- Create and store all workers
+    Nr of workers are spawned based on nr of cpu
+    When a worker died, a new one should be spawned (listen event worker.onExit)
+- Cluster will open a tcp connection port. This port will face the internet
+    Use NET module (Express will use HTTP module)
+- We received a connection and need to pass it to the appropriate worker
+    Master.onConnection
+
+### Worker
+- Don't expose to ouside
+- Wait a connection passed from the Master
+    onMessage
+
+- When a connection come
+    verify message come from Master
+    pass connection to worker.server
+
+
+### Test cluster node
+- Start
+`$ node clusterTest.js           
+Primary 5797 is running
+Worker 5805 started
+Worker 5804 started
+Worker 5811 started
+Worker 5813 started`
+
+- Acces localhost:8000, refresh many times
+`
+Worker 5805 has been called!!!
+Worker 5805 has been called!!!
+Worker 5805 has been called!!!
+Worker 5804 has been called!!!
+Worker 5804 has been called!!!
+Worker 5804 has been called!!!
+`
+
 
 ## Node-client
 The node program that captures local performance data
@@ -65,5 +126,6 @@ Req:
 # Misc
 - [Redis.io](https://redis.io/docs/getting-started/)
 - [Node Cluster](https://nodejs.org/api/cluster.html)
-- [Socker.io Load Balancing](https://socket.io/docs/v4/using-multiple-nodes/)
+- [Socket.io Load Balancing](https://socket.io/docs/v4/using-multiple-nodes/)
+- [Socket Redis Adapter](https://socket.io/docs/v4/redis-adapter/)
 - [Node Os](https://nodejs.org/api/os.html)
