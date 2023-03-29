@@ -127,6 +127,17 @@ Req:
 - `redis-cli`
 ![connect redis-cli](./screenshots/1-connect-redis-cli.PNG)
 
+
+# Run with docker
+- Start Server and React-Client
+`docker compose up redis server react-client`
+
+- Start Node-client, default has 3 instance
+`docker compose up node-client`
+
+- React client run at port 8001
+- Server run at port 8000
+
 # Misc
 - [Redis.io](https://redis.io/docs/getting-started/)
 - [Node Cluster](https://nodejs.org/api/cluster.html)

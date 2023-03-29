@@ -5,10 +5,11 @@
 // - socket.io-client
 
 const isDebuggerMode = process.env.NODE_ENV === 'debug';
+const socketIoServerUrl = process.env.SOCKET_SERVER_URL || 'http://localhost:8000';
 
 const os = require('os');
 const io = require('socket.io-client');
-const socket = io('http://localhost:8000');
+const socket = io(socketIoServerUrl);
 
 socket.on('connect', () => {
     console.log(`I connected to the socket server!!!!`);
