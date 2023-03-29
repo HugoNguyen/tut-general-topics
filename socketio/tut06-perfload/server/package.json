@@ -20,5 +20,9 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
+  },
+  "nodemonConfig": {
+    "ignore": ["db.json"],
+    "delay": 2500
   }
 }

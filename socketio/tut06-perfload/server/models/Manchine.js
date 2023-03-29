@@ -5,12 +5,13 @@ class Machine {
         this.freeMem = data.freeMem;
         this.totalMem = data.totalMem;
         this.usedMem = data.usedMem;
-        this.memUsage = data.memUsage;
+        this.memUseage = data.memUseage;
         this.osType = data.osType;
         this.upTime = data.upTime;
         this.cpuModel = data.cpuModel;
         this.numCores = data.numCores;
         this.cpuSpeed = data.cpuSpeed;
+        this.isActive = data.isActive;
     }
 }
 
