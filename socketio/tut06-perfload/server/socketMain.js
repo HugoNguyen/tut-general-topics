@@ -6,16 +6,21 @@ function socketMain(io, socket) {
     
     let macA;
 
+    socket.emit('requestClientAuth');
+
     socket.on('clientAuth', key => {
         if(key === 'clients-abczyz123456') {
             // valid node-client
             socket.join('clients');
+            console.log(`socket ${socket.id} join room clients`);
         } else if(key === 'ui-zxcvbn123456') {
             // valid ui client has joined
             socket.join('ui');
+            console.log(`socket ${socket.id} join room ui`);
         } else {
             // an invalid client has joined. Goodbye
             socket.disconnect(true);
+            console.log(`socket ${socket.id} disconnected`);
         }
     });
     
@@ -26,12 +31,12 @@ function socketMain(io, socket) {
         macA = data.macA;
 
         // save the machine
-        const rs = await checkAndAdd(data);
-        console.log(rs);
+        await checkAndAdd(data);
     });
 
-    socket.on('perfData', data => {
-        console.log(data);
+    socket.on('perfData', async (data) => {
+        // console.log("Tick...");
+        io.to('ui').emit('data', data);
     });
 }
 
@@ -44,8 +49,6 @@ async function checkAndAdd(data){
         console.error(`Cannot find the path`);
     }
     
-    console.log(machineCollection);
-
     const exist = machineCollection.find(q => q.macA === data.macA);
 
     if (!exist) {

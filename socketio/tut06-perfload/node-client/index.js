@@ -21,8 +21,10 @@ socket.on('connect', () => {
         }
     }
 
-    // client auth with single key value
-    socket.emit('clientAuth', 'clients-abczyz123456');
+    socket.on('requestClientAuth', () => {
+        // client auth with single key value
+        socket.emit('clientAuth', 'clients-abczyz123456');
+    });
 
     performanceData().then(allPerformanceData => {
         allPerformanceData.macA = macA;
