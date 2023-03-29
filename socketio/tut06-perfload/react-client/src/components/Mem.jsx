@@ -10,7 +10,7 @@ function Mem({ data }) {
         memWidgetId,
     } = data;
 
-    const canvas = document.querySelector(`.${memWidgetId}`);
+    const canvas = document.querySelector(`[data-id="${memWidgetId}"]`);
     drawCircle(canvas, memUseage * 100);
     
     const totalMemInGB = Math.floor(totalMem/1073741824*100)/100;
@@ -20,9 +20,9 @@ function Mem({ data }) {
         <div className="col-sm-3 mem">
             <h3>Memory Usage</h3>
             <div className="canvas-wrapper">
-                <canvas className={memWidgetId} width="200" height="200"></canvas>
+                <canvas data-id={memWidgetId} width="200" height="200"></canvas>
                 <div className="mem-text">
-                    {memUseage * 100}%
+                    {Math.floor(memUseage * 100)}%
                 </div>
             </div>
             <div>

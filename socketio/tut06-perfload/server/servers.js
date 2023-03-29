@@ -8,8 +8,10 @@ const socketio = require('socket.io');
 const socketMain = require('./socketMain');
 // const expressMain = require('./expressMain');
 
-const port = 8000;
-const num_processes = require('os').cpus().length;
+const port = process.env.PORT || 8000;
+const num_processes = require('os').cpus().length > 1 ? require('os').cpus().length - 1 : require('os').cpus().length;
+
+const redisServerUrl = process.env.REDIS_SERVER_URL || 'redis://localhost:6379';
 
 // Brew breaks for me more than it solves a problem, so I 
 // installed redis from https://redis.io/topics/quickstart
@@ -68,7 +70,7 @@ if (cluster.isMaster) {
 		worker.send('sticky-session:connection', connection);
 	});
 	server.listen(port);
-	console.log(`Master listening on port ${port}`);
+	console.log(`Master listening on port ${port}. With ${num_processes} workers`);
 } else {
 	// Note we don't use a port here because the master listens on it for us.
 	let app = express();
@@ -90,7 +92,7 @@ if (cluster.isMaster) {
 	// redis-cli monitor
 	// MIGRATE FROM socket.io-redis
 	// io.adapter(io_redis({ host: 'localhost', port: 6379 }));
-	const pubClient = createClient({ url: "redis://localhost:6379" });
+	const pubClient = createClient({ url: redisServerUrl });
 	const subClient = pubClient.duplicate();
 
 	Promise.all([pubClient.connect(), subClient.connect()]).then(() => {

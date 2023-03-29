@@ -5,6 +5,48 @@ services:
     ports:
       - "6379:6379"
 
+  server:
+    image: tut06_perfload-server
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - PORT=80
+      - REDIS_SERVER_URL=redis://redis:6379
+    restart: unless-stopped
+    depends_on:
+      - redis
+    ports:
+      - "8000:80"
+
+  react-client:
+    image: tut06_perfload-react-client
+    build: 
+      context: ./react-client
+      dockerfile: Dockerfile
+    environment:
+      - SOCKET_SERVER_URL=http://localhost:8000/
+    ports:
+      - "8001:80"
+    restart: unless-stopped
+
+  # Node client using for test multi client send data to server
+  node-client:
+    image: tut06_perfload-node-client
+    build: 
+      context: ./node-client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - SOCKET_SERVER_URL=http://server/
+    deploy:
+      mode: replicated
+      replicas: 3
+      # resources:
+      #   limits:
+      #     cpus: '0.50'
+      #     memory: 50M
+
 networks:
   default:
     driver: bridge

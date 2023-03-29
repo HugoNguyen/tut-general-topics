@@ -1,6 +1,9 @@
 import io from 'socket.io-client';
+import env from '../enviroment';
 
-const socket = io.connect('http://localhost:8000');
+const socketServerUrl = env.socketServerUrl || 'http://localhost:8000';
+
+const socket = io.connect(socketServerUrl);
 
 socket.on('requestClientAuth', () => {
     socket.emit('clientAuth', 'ui-zxcvbn123456');
