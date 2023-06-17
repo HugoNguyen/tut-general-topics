@@ -1,0 +1,54 @@
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.container--fullwidth {
+  background-color: #23424A;
+  padding: 100px 0;
+  color: #FFF;
+}
+
+.container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.inner {
+  width: 60%;
+}
+
+.title {
+  font-size: 3rem;
+  /* font-weight: 900; */
+}
+
+.subtitle {
+  margin-bottom: 3em;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: #38CFD9;
+  padding: .75em 2em;
+  color: #072A2D;
+  font-weight: 900;
+  border-radius: 100px;
+  border-style: none;
+  
+}
+
+.btn:hover,
+.btn:focus {
+  opacity: .75;
+}
