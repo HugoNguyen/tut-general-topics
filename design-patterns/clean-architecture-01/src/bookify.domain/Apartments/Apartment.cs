@@ -1,11 +1,18 @@
-﻿namespace bookify.domain.Apartments;
+﻿using bookify.domain.Abstractions;
+
+namespace bookify.domain.Apartments;
 
 /// <summary>
 /// Tips: seal all class if at that time you don't intend to inherit them.
 /// </summary>
-public sealed class Apartment
+public sealed class Apartment : Entity
 {
-    public Guid Id { get; private set; }
+    public Apartment(Guid id)
+        : base(id)
+    {
+        
+    }
+
     public string Name { get; private set; }
     public string Description { get; private set; }
     public string Country { get; private set; }
