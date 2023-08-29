@@ -55,5 +55,9 @@ public class Result<TValue> : Result
         ? _value!
         : throw new InvalidOperationException("The value of a failure result can not be accessed");
 
+    /// <summary>
+    /// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/user-defined-conversion-operators
+    /// </summary>
+    /// <param name="value"></param>
     public static implicit operator Result<TValue>(TValue? value) => Create(value);
 }
