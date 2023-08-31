@@ -8,4 +8,12 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
         : base(options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Auto scan our entity configuations and apply them
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        base.OnModelCreating(modelBuilder);
+    }
 }
