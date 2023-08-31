@@ -67,6 +67,8 @@ public sealed class Booking : Entity
 
         booking.RaiseDomainEvent(new BookingReservedDomainEvent(booking.Id));
 
+        // After booking, will update lastBookedOnUtc
+        // at here will perform check optimstic concurrency
         apartment.LastBookedOnUtc = utcNow;
 
         return booking;

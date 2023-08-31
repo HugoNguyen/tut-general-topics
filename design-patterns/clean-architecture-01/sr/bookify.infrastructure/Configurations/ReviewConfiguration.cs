@@ -1,4 +1,7 @@
-﻿using bookify.domain.Reviews;
+﻿using bookify.domain.Apartments;
+using bookify.domain.Bookings;
+using bookify.domain.Reviews;
+using bookify.domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -7,6 +10,27 @@ internal sealed class ReviewConfiguration : IEntityTypeConfiguration<Review>
 {
     public void Configure(EntityTypeBuilder<Review> builder)
     {
-        throw new NotImplementedException();
+        builder.ToTable("reviews");
+
+        builder.HasKey(review => review.Id);
+
+        builder.Property(review => review.Rating)
+            .HasConversion(rating => rating.Value, value => Rating.Create(value).Value);
+
+        builder.Property(review => review.Comment)
+            .HasMaxLength(200)
+            .HasConversion(comment => comment.Value, value => new Comment(value));
+
+        builder.HasOne<Apartment>()
+            .WithMany()
+            .HasForeignKey(review => review.ApartmentId);
+
+        builder.HasOne<Booking>()
+            .WithMany()
+            .HasForeignKey(review => review.BookingId);
+
+        builder.HasOne<User>()
+            .WithMany()
+            .HasForeignKey(review => review.UserId);
     }
 }
