@@ -25,5 +25,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         // Saying: this is a unique index
         builder.HasIndex(user => user.Email).IsUnique();
+
+        builder.HasIndex(user => user.IdentityId).IsUnique();
     }
 }
