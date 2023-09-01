@@ -21,6 +21,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
     app.ApplyMigrations();
+
+    //when need to add more mock data, uncomment below line
+    //app.SeedData();
 }
 
 app.UseHttpsRedirection();
