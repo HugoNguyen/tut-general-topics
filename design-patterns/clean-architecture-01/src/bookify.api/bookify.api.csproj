@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\sr\bookify.infrastructure\bookify.infrastructure.csproj" />
     <ProjectReference Include="..\bookify.application\bookify.application.csproj" />
   </ItemGroup>
