@@ -25,6 +25,6 @@ public class ApartmentsController : ControllerBase
 
         var result = await _sender.Send(query, cancellationToken);
 
-        return Ok(result);
+        return Ok(result.Value);
     }
 }
