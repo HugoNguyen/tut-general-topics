@@ -6,6 +6,11 @@ public abstract class Entity
     /// </summary>
     private readonly List<IDomainEvent> _domainEvents = new();
 
+    /// <summary>
+    /// To statisfy Microsoft.EntityFrameworkCore.Tools
+    /// </summary>
+    protected Entity() { }
+
     protected Entity(Guid id)
     {
         Id = id;

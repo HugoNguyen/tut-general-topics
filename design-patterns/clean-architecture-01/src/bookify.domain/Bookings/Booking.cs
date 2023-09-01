@@ -6,6 +6,7 @@ using bookify.domain.Shared;
 namespace bookify.domain.Bookings;
 public sealed class Booking : Entity
 {
+    private Booking() { }
     private Booking(
         Guid id,
         Guid apertmentId,
