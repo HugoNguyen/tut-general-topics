@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "b0ffb24f-00dd-4f9d-9320-3c61ec06781e",
+		"name": "Bookify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2601912"
+	},
+	"item": [
+		{
+			"name": "Apartments",
+			"item": [
+				{
+					"name": "Search Apartment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/apartments?startDate=07-20-2023&endDate=07-31-2023",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"apartments"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "07-20-2023"
+								},
+								{
+									"key": "endDate",
+									"value": "07-31-2023"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Reserve Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"apartmentId\": \"5b3a24a5-b9d2-4515-baf4-10e1e68b6018\",\r\n    \"userId\": \"a45258a4-8af6-4296-ae03-e72320acb7f9\",\r\n    \"startDate\": \"2023-08-15\",\r\n    \"endDate\": \"2023-08-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/bookings",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/api/bookings/66cdf7ed-3469-417d-b451-3477b31367c9",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"66cdf7ed-3469-417d-b451-3477b31367c9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test2@yopmail.com\",\r\n    \"firstName\": \"test2\",\r\n    \"lastName\": \"test\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/users/register",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log in User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.environment.set(`client_access_token`, jsonData.accessToken);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test2@yopmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/users/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Add Reviews",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookingId\": \"\",\r\n    \"rating\": 0,\r\n    \"comment\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/api/reviews",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"api",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "Access Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "bookify-auth-client",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "3E3yvXaYppoYBF3Ir6DgtEzADKKzSurZ",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test@test.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{idp_url}}/realms/bookify/protocol/openid-connect/token",
+							"host": [
+								"{{idp_url}}"
+							],
+							"path": [
+								"realms",
+								"bookify",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access Token Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "bookify-admin-client",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "UZDmbNxWmV4TlpaCRcju6pMRsyuV3er1",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "openid email",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{idp_url}}/realms/bookify/protocol/openid-connect/token",
+							"host": [
+								"{{idp_url}}"
+							],
+							"path": [
+								"realms",
+								"bookify",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJUeGFiT3J6Z1hDZXpUWXdMb1EwM1g5d0dndU02V2pNcThETU5LelhOME1BIn0.eyJleHAiOjE2OTM1NzY0MjAsImlhdCI6MTY5MzU3NTgyMCwianRpIjoiMGQ1YTJhY2UtZjA4MS00ZTYxLTgwY2ItMzg4YjgyY2Q1NjllIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoxODA4MC9yZWFsbXMvYm9va2lmeSIsImF1ZCI6WyJyZWFsbS1tYW5hZ2VtZW50IiwiYWNjb3VudCJdLCJzdWIiOiIzNTM4OTk0Zi1iMDk1LTQ1ZjYtOGY5OC1hOTVkZDYxYjg0YzEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJib29raWZ5LWFkbWluLWNsaWVudCIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjE4MDgwIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1ib29raWZ5Il19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJtYW5hZ2UtdXNlcnMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJjbGllbnRJZCI6ImJvb2tpZnktYWRtaW4tY2xpZW50IiwiY2xpZW50SG9zdCI6IjE3Mi4yNS4wLjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1ib29raWZ5LWFkbWluLWNsaWVudCIsImNsaWVudEFkZHJlc3MiOiIxNzIuMjUuMC4xIn0.fXC6XJSKKMk_RQZtNl53o5YcEic5WtR6rMn5ZzN-a1Q48fnUjNIUP0LE57UrbrWMTgBsblv8b3Nu0GrDfJhwa2pNCju1O88QkSppfWLkG2snc1fv9UVpYyua7HfTlkPbDzCCF31E_AcpInTRz_3OB_YGeyjt7a7Enwt3Iji0YuJPls_nt2lIRskEKXER9nwGxPMWkpvIXfYiTn6rg4aX1MzJkwYOKe4_OAKsO3EaI9mXXK0V964IekIE3GA4RWJ-7L7gfVj4BX_FM8aGKrsBASROBlGguqj6rZR_GfwcmTbAj95m-Do0qzfuTZ6M5EmxK2dV5ff0PA2VLbY7CW7yFQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"access\": null,\r\n    \"attributes\": {},\r\n    \"clientRoles\": null,\r\n    \"createdTimestamp\": 1693575872,\r\n    \"credentials\": [\r\n        {\r\n            \"value\": \"12345\",\r\n            \"temporary\": false,\r\n            \"type\": \"password\"\r\n        }\r\n    ],\r\n    \"disableableCredentialTypes\": null,\r\n    \"email\": \"test2@yopmail.com\",\r\n    \"emailVerified\": true,\r\n    \"enabled\": true,\r\n    \"federationLink\": null,\r\n    \"id\": null,\r\n    \"groups\": null,\r\n    \"firstName\": \"test2\",\r\n    \"lastName\": \"test\",\r\n    \"notBefore\": null,\r\n    \"origin\": null,\r\n    \"realmRoles\": null,\r\n    \"requiredActions\": [],\r\n    \"self\": null,\r\n    \"serviceAccountClientId\": null,\r\n    \"username\": \"test2@yopmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{idp_url}}/admin/realms/bookify/users",
+							"host": [
+								"{{idp_url}}"
+							],
+							"path": [
+								"admin",
+								"realms",
+								"bookify",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
