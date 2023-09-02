@@ -18,6 +18,9 @@ internal sealed class ApartmentConfiguration : IEntityTypeConfiguration<Apartmen
         // 2. Define primary key
         builder.HasKey(apartment => apartment.Id);
 
+        builder.Property(apartment => apartment.Id)
+            .HasConversion(apartmentId => apartmentId.Value, value => new ApartmentId(value));
+
         // 3. Mapping a complex object (has many property).
         //// properties of complex object will be map to a set of columns in the table owning enitity, is apartments
         //// If it is a collection, will use OwnsCollection. In that case, it will be map to a separate table

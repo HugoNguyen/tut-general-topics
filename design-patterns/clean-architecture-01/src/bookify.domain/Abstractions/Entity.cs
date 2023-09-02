@@ -1,5 +1,5 @@
 ﻿namespace bookify.domain.Abstractions;
-public abstract class Entity
+public abstract class Entity<TEntityId> : IEntity
 {
     /// <summary>
     /// Contain the domain events that raised on this entity
@@ -11,12 +11,12 @@ public abstract class Entity
     /// </summary>
     protected Entity() { }
 
-    protected Entity(Guid id)
+    protected Entity(TEntityId id)
     {
         Id = id;
     }
 
-    public Guid Id { get; init; }
+    public TEntityId Id { get; init; }
 
     public IReadOnlyList<IDomainEvent> GetDomainEvents()
     {

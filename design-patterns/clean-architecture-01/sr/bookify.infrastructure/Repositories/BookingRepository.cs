@@ -3,7 +3,7 @@ using bookify.domain.Bookings;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookify.infrastructure.Repositories;
-internal sealed class BookingRepository : Repository<Booking>, IBookingRepository
+internal sealed class BookingRepository : Repository<Booking, BookingId>, IBookingRepository
 {
     private static readonly BookingStatus[] ActiveBookingStatuses =
     {

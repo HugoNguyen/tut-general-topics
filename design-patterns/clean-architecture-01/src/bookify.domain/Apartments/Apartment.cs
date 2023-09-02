@@ -6,12 +6,12 @@ namespace bookify.domain.Apartments;
 /// <summary>
 /// Tips: seal all class if at that time you don't intend to inherit them.
 /// </summary>
-public sealed class Apartment : Entity
+public sealed class Apartment : Entity<ApartmentId>
 {
     private Apartment() { }
 
     public Apartment(
-        Guid id,
+        ApartmentId id,
         Name name,
         Description description,
         Address address,

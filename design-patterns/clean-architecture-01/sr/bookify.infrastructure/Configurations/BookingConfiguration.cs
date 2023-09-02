@@ -14,6 +14,9 @@ internal sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder.HasKey(booking => booking.Id);
 
+        builder.Property(booking => booking.Id)
+            .HasConversion(bookingId => bookingId.Value, value => new BookingId(value));
+
         builder.OwnsOne(booking => booking.PriceForPeriod, priceBuilder =>
         {
             priceBuilder.Property(money => money.Currency)
@@ -40,9 +43,17 @@ internal sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder.OwnsOne(booking => booking.Duration);
 
+        //Don't need to add a conversion here. TESTED
+        //builder.Property(booking => booking.ApartmentId)
+        //    .HasConversion(apartmentId => apartmentId.Value, value => new ApartmentId(value));
+
         builder.HasOne<Apartment>()
             .WithMany()
             .HasForeignKey(booking => booking.ApartmentId);
+
+        //Don't need to add a conversion here. TESTED
+        //builder.Property(booking => booking.UserId)
+        //    .HasConversion(userId => userId.Value, value => new UserId(value));
 
         builder.HasOne<User>()
             .WithMany()

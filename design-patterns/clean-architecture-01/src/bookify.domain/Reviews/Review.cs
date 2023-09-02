@@ -1,16 +1,18 @@
 ﻿using bookify.domain.Abstractions;
+using bookify.domain.Apartments;
 using bookify.domain.Bookings;
 using bookify.domain.Reviews.Events;
+using bookify.domain.Users;
 
 namespace bookify.domain.Reviews;
-public sealed class Review : Entity
+public sealed class Review : Entity<ReviewId>
 {
     private Review() { }
     private Review(
-        Guid id,
-        Guid apartmentId,
-        Guid bookingId,
-        Guid userId,
+        ReviewId id,
+        ApartmentId apartmentId,
+        BookingId bookingId,
+        UserId userId,
         Rating rating,
         Comment comment,
         DateTime createdOnUtc)
@@ -24,9 +26,9 @@ public sealed class Review : Entity
         CreatedOnUtc = createdOnUtc;
     }
 
-    public Guid ApartmentId { get; private set; }
-    public Guid BookingId { get; private set; }
-    public Guid UserId { get; private set; }
+    public ApartmentId ApartmentId { get; private set; }
+    public BookingId BookingId { get; private set; }
+    public UserId UserId { get; private set; }
     public Rating Rating { get; private set; }
     public Comment Comment { get; private set; }
     public DateTime CreatedOnUtc { get; private set; }
@@ -42,7 +44,7 @@ public sealed class Review : Entity
             return Result.Failure<Review>(ReviewErrors.NotEligible);
         }
 
-        var review = new Review(Guid.NewGuid(), booking.ApartmentId, booking.Id, booking.UserId, rating, comment, createdOnUtc);
+        var review = new Review(ReviewId.New(), booking.ApartmentId, booking.Id, booking.UserId, rating, comment, createdOnUtc);
 
         review.RaiseDomainEvent(new ReviewCreatedDomainEvent(review.Id));
 

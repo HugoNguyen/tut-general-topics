@@ -22,7 +22,7 @@ internal sealed class CancelBookingCommandHandler : ICommandHandler<CancelBookin
 
     public async Task<Result> Handle(CancelBookingCommand request, CancellationToken cancellationToken)
     {
-        var booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+        var booking = await _bookingRepository.GetByIdAsync(new BookingId(request.BookingId), cancellationToken);
 
         if (booking is null)
         {
