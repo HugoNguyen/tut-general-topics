@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookify.domain", "src\booki
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookify.application", "src\bookify.application\bookify.application.csproj", "{8992A25A-1891-4D24-ACDB-7AD844C4BAF6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookify.infrastructure", "sr\bookify.infrastructure\bookify.infrastructure.csproj", "{0118BD65-F221-4EF8-B719-03623B8B0E24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookify.infrastructure", "src\bookify.infrastructure\bookify.infrastructure.csproj", "{0118BD65-F221-4EF8-B719-03623B8B0E24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookify.api", "src\bookify.api\bookify.api.csproj", "{A993E590-DB05-45C4-BAC3-43B7ADCDD34B}"
 EndProject
