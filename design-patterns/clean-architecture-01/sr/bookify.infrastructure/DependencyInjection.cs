@@ -11,6 +11,7 @@ using bookify.infrastructure.Authentication.Models;
 using bookify.infrastructure.Clock;
 using bookify.infrastructure.Data;
 using bookify.infrastructure.Email;
+using bookify.infrastructure.Outbox;
 using bookify.infrastructure.Repositories;
 using Dapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Quartz;
 
 namespace bookify.infrastructure;
 public static class DependencyInjection
@@ -33,6 +35,8 @@ public static class DependencyInjection
         AddPersistence(services, configuration);
 
         AddAuthentication(services, configuration);
+
+        AddBackgroundJobs(services, configuration);
 
         return services;
     }
@@ -91,5 +95,16 @@ public static class DependencyInjection
         services.AddSingleton<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
 
         SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
+    }
+
+    private static void AddBackgroundJobs(IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<OutboxOptions>(configuration.GetSection("Outbox"));
+
+        services.AddQuartz(options => { options.UseMicrosoftDependencyInjectionJobFactory(); });
+
+        services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+        services.ConfigureOptions<ProcessOutboxMessagesJobSetup>();
     }
 }
