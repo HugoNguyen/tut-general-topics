@@ -5,6 +5,7 @@ using bookify.application.Abstractions.Email;
 using bookify.domain.Abstractions;
 using bookify.domain.Apartments;
 using bookify.domain.Bookings;
+using bookify.domain.Reviews;
 using bookify.domain.Users;
 using bookify.infrastructure.Authentication;
 using bookify.infrastructure.Authentication.Models;
@@ -89,6 +90,8 @@ public static class DependencyInjection
         services.AddScoped<IApartmentRepository, ApartmentRepository>();
 
         services.AddScoped<IBookingRepository, BookingRepository>();
+
+        services.AddScoped<IReviewRepository, ReviewRepository>();
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
