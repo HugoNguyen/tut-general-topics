@@ -60,17 +60,6 @@ export class CourseComponent implements OnInit, AfterViewInit {
          * - concatMap: cause lag, because every new value emited, it will produce new request.
          * -- preview request must be unsubscribed (canceled)
          */
-        const searchLesson$ = fromEvent(this.input.nativeElement, 'keyup')
-            .pipe(
-                map((event: any) => event.target.value),
-                debounceTime(400),
-                distinctUntilChanged(),
-                // concatMap(search => this.loadLessons(search))
-                switchMap(search => this.loadLessons(search))
-            );
-
-        const initialLessons$ = this.loadLessons();
-
         /**
          * First time access this component
          * It should load default all lesson
@@ -78,7 +67,15 @@ export class CourseComponent implements OnInit, AfterViewInit {
          * - initialLessons$ will run first and completed. The initial list will be load
          * - Then start searchLesson$
          */
-        this.lessons$ = concat(initialLessons$, searchLesson$);
+        this.lessons$ = fromEvent(this.input.nativeElement, 'keyup')
+            .pipe(
+                map((event: any) => event.target.value),
+                startWith(''),
+                debounceTime(400),
+                distinctUntilChanged(),
+                // concatMap(search => this.loadLessons(search))
+                switchMap(search => this.loadLessons(search))
+            );
     }
 
     loadLessons(search: string = ''): Observable<Lesson[]> {
