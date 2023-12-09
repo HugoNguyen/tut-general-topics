@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Observable, concat, interval, merge, noop, of } from 'rxjs';
+import { Observable, concat, forkJoin, interval, merge, noop, of, timer } from 'rxjs';
 import { createHttpObservable } from '../common/util';
 import { map, take } from 'rxjs/operators';
 import { RxJsLoggingLevel, debug, setRxjsLoggingLevel } from '../common/debug';
@@ -22,6 +22,7 @@ export class AboutComponent implements OnInit {
     // this.sample04_Merge();
     // this.sample05_Unsubscribe();
     // this.sample06_Debug();
+    // this.sample07_ForkJoin();
   }
 
   sample01_BuildHttpObservable() {
@@ -132,5 +133,21 @@ export class AboutComponent implements OnInit {
         debug(RxJsLoggingLevel.INFO, 'courses'),
       )
       .subscribe();
+  }
+
+  sample07_ForkJoin() {
+    const observable = forkJoin([
+      of(1, 2, 3, 4),
+      Promise.resolve(8),
+      timer(4000)
+    ]);
+    observable.subscribe({
+     next: value => console.log(value),
+     complete: () => console.log('This is how it ends!'),
+    });
+     
+    // Logs:
+    // [4, 8, 0] after 4 seconds
+    // 'This is how it ends!' immediately after
   }
 }
