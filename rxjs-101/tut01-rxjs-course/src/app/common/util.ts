@@ -1,10 +1,10 @@
 import { Observable } from "rxjs";
 
 
-export function createHttpObservable(url: string) {
+export function createHttpObservable<T>(url: string): Observable<T> {
 
     // deprecated Observable.create
-    return new Observable(observer => {
+    return new Observable<T>(observer => {
         const controller = new AbortController();
         const signal = controller.signal;
 
