@@ -25,6 +25,7 @@ import { createHttpObservable } from '../common/util';
 })
 export class CourseComponent implements OnInit, AfterViewInit {
 
+    courseId: string;
 
     course$: Observable<Course>;
     lessons$: Observable<Lesson[]>;
@@ -39,14 +40,9 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
-        const courseId = this.route.snapshot.params['id'];
+        this.courseId = this.route.snapshot.params['id'];
 
-        this.course$ = createHttpObservable<Course>(`/api/courses/${courseId}`);
-
-        this.lessons$ = createHttpObservable<Lesson[]>(`/api/lessons?courseId=${courseId}&pageSize=100`)
-            .pipe(
-                map(res => res['payload'])
-            );
+        this.course$ = createHttpObservable<Course>(`/api/courses/${this.courseId}`);
     }
 
     ngAfterViewInit() {
@@ -61,19 +57,36 @@ export class CourseComponent implements OnInit, AfterViewInit {
          * Problem:
          * - Value emitted from keyup event, may be the same. It is expensive to create request for the same value
          * -- fix with distinctUntilChanged
+         * - concatMap: cause lag, because every new value emited, it will produce new request.
+         * -- preview request must be unsubscribed (canceled)
          */
-        fromEvent(this.input.nativeElement, 'keyup')
+        const searchLesson$ = fromEvent(this.input.nativeElement, 'keyup')
             .pipe(
                 map((event: any) => event.target.value),
                 debounceTime(400),
                 distinctUntilChanged(),
-            )
-            .subscribe(console.log);
+                // concatMap(search => this.loadLessons(search))
+                switchMap(search => this.loadLessons(search))
+            );
 
+        const initialLessons$ = this.loadLessons();
 
+        /**
+         * First time access this component
+         * It should load default all lesson
+         * Explanation:
+         * - initialLessons$ will run first and completed. The initial list will be load
+         * - Then start searchLesson$
+         */
+        this.lessons$ = concat(initialLessons$, searchLesson$);
     }
 
-
+    loadLessons(search: string = ''): Observable<Lesson[]> {
+        return createHttpObservable<Lesson[]>(`/api/lessons?courseId=${this.courseId}&pageSize=100&filter=${search}`)
+        .pipe(
+            map(res => res['payload'])
+        );
+    }
 
 
 }
