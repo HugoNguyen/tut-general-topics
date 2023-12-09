@@ -17,7 +17,7 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
     form: FormGroup;
     course:Course;
 
-    @ViewChild('saveButton', { static: true }) saveButton: ElementRef;
+    @ViewChild('saveButton', { read: ElementRef, static: true }) saveButton: ElementRef;
 
     @ViewChild('searchInput', { static: true }) searchInput : ElementRef;
 
@@ -68,7 +68,23 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
 
 
     ngAfterViewInit() {
-
+        /**
+         * Implement Save
+         * - Click Save btn and send save request
+         * - Handle issue multiple click
+         * Explanation:
+         * - concatMap cannot fix issue multiple click.
+         *      Event emited will create new request
+         * - exhaustMap can fix issue multiple click
+         *      After an event emitted, a request is created.
+         *      Until that request completed, the ongoing events will be ignore
+         */
+        fromEvent(this.saveButton.nativeElement, 'click')
+            .pipe(
+                // concatMap(() => this.saveCourse(this.form.value))
+                exhaustMap(() => this.saveCourse(this.form.value))
+            )
+            .subscribe();
 
     }
 
