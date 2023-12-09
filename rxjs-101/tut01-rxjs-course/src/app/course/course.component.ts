@@ -16,6 +16,7 @@ import {
 import {merge, fromEvent, Observable, concat} from 'rxjs';
 import {Lesson} from '../model/lesson';
 import { createHttpObservable } from '../common/util';
+import { RxJsLoggingLevel, debug } from '../common/debug';
 
 
 @Component({
@@ -76,6 +77,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
             .pipe(
                 map((event: any) => event.target.value),
                 startWith(''),
+                debug(RxJsLoggingLevel.INFO, 'search'),
                 debounceTime(400),
                 // throttleTime(400),
                 distinctUntilChanged(),

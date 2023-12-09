@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable, concat, interval, merge, noop, of } from 'rxjs';
 import { createHttpObservable } from '../common/util';
 import { map, take } from 'rxjs/operators';
+import { RxJsLoggingLevel, debug, setRxjsLoggingLevel } from '../common/debug';
 
 @Component({
   selector: 'about',
@@ -19,7 +20,8 @@ export class AboutComponent implements OnInit {
     // this.sample03_Concatenation01();
     // this.sample03_Concatenation02();
     // this.sample04_Merge();
-    this.sample05_Unsubscribe();
+    // this.sample05_Unsubscribe();
+    // this.sample06_Debug();
   }
 
   sample01_BuildHttpObservable() {
@@ -120,5 +122,15 @@ export class AboutComponent implements OnInit {
     const http$ = createHttpObservable('/api/courses');
     const sub = http$.subscribe(console.log);
     setTimeout(() => sub.unsubscribe(), 0);
+  }
+
+  sample06_Debug() {
+    setRxjsLoggingLevel(RxJsLoggingLevel.INFO);
+
+    createHttpObservable('/api/courses')
+      .pipe(
+        debug(RxJsLoggingLevel.INFO, 'courses'),
+      )
+      .subscribe();
   }
 }
