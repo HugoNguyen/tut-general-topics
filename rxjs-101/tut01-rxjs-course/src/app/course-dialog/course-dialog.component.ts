@@ -43,15 +43,16 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
          * Explanation:
          *  Filter values that is valid
          *  Each valid value will be save
-         *  New changes will wait previous changes saved before excuting new request for new changes
+         *  saveCourse running in parallel.
          *  Problem:
-         *      if there're many changes emitted nearly same time (text input).
-         *          it will cause lag because of many save requests are queued to excuted
+         *      saveCourse running in parallel.
+         *          It's better for performance but it's not our expection in this case
+         *      should back to concateMap for this case
          */
         this.form.valueChanges
             .pipe(
                 filter(() => this.form.valid),
-                concatMap(changes => this.saveCourse(changes))
+                mergeMap(changes => this.saveCourse(changes))
             )
             .subscribe();
     }

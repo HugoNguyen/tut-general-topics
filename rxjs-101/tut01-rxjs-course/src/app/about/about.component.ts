@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Observable, concat, interval, noop, of } from 'rxjs';
+import { Observable, concat, interval, merge, noop, of } from 'rxjs';
 import { createHttpObservable } from '../common/util';
 import { map, take } from 'rxjs/operators';
 
@@ -18,6 +18,7 @@ export class AboutComponent implements OnInit {
     // this.sample02_MapOperator();
     // this.sample03_Concatenation01();
     // this.sample03_Concatenation02();
+    // this.sample04_Merge();
   }
 
   sample01_BuildHttpObservable() {
@@ -94,6 +95,20 @@ export class AboutComponent implements OnInit {
 
     const result$ = concat(source1$, source2$, source3$);
 
+    result$.subscribe(console.log);
+  }
+
+  /**
+   * Output
+   *  0 0 1 10 2 20 3 30
+   * Explanation:
+   *  Flatten output from source 1 and source 2 into 1 output
+   *  source 1 and 2 emit valua parallel
+   */
+  sample04_Merge() {
+    const interval1$ = interval(1000);
+    const interval2$ = interval1$.pipe(map(vl => 10 * vl));
+    const result$ = merge(interval1$, interval2$);
     result$.subscribe(console.log);
   }
 }
