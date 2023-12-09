@@ -43,28 +43,28 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
          * Explanation:
          *  Filter values that is valid
          *  Each valid value will be save
-         * 
-         * Problem:
-         *  The next saveCourse$ should be wait until the previous call complete
+         *  New changes will wait previous changes saved before excuting new request for new changes
+         *  Problem:
+         *      if there're many changes emitted nearly same time (text input).
+         *          it will cause lag because of many save requests are queued to excuted
          */
         this.form.valueChanges
             .pipe(
-                filter(() => this.form.valid)
+                filter(() => this.form.valid),
+                concatMap(changes => this.saveCourse(changes))
             )
-            .subscribe(changes => {
-                const saveCourse$ = fromPromise(fetch(`/api/courses/${this.course.id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify(changes),
-                    headers: {
-                        'content-type': 'application/json'
-                    }
-                }));
-
-                saveCourse$.subscribe();
-            });
+            .subscribe();
     }
 
-
+    saveCourse(changes) {
+        return fromPromise(fetch(`/api/courses/${this.course.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(changes),
+            headers: {
+                'content-type': 'application/json'
+            }
+        }));
+    }
 
 
     ngAfterViewInit() {
