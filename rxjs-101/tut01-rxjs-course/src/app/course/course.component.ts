@@ -51,7 +51,24 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
 
-
+        /**
+         * Every time press, send a request to search lesson
+         * After an event emmited, wait 400ms before back to receive new event
+         * - To not make same request for same value
+         * - Event emited while waiting will be ignore
+         * - use debounceTime
+         * 
+         * Problem:
+         * - Value emitted from keyup event, may be the same. It is expensive to create request for the same value
+         * -- fix with distinctUntilChanged
+         */
+        fromEvent(this.input.nativeElement, 'keyup')
+            .pipe(
+                map((event: any) => event.target.value),
+                debounceTime(400),
+                distinctUntilChanged(),
+            )
+            .subscribe(console.log);
 
 
     }
