@@ -4,7 +4,7 @@ import {Course} from "../model/course";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import * as moment from 'moment';
 import {fromEvent} from 'rxjs';
-import {concatMap, distinctUntilChanged, exhaustMap, filter, mergeMap} from 'rxjs/operators';
+import {concatMap, distinctUntilChanged, exhaustMap, filter, mergeMap, tap} from 'rxjs/operators';
 import {fromPromise} from 'rxjs/internal-compatibility';
 
 @Component({
@@ -39,9 +39,31 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
+        /**
+         * Explanation:
+         *  Filter values that is valid
+         *  Each valid value will be save
+         * 
+         * Problem:
+         *  The next saveCourse$ should be wait until the previous call complete
+         */
+        this.form.valueChanges
+            .pipe(
+                filter(() => this.form.valid)
+            )
+            .subscribe(changes => {
+                const saveCourse$ = fromPromise(fetch(`/api/courses/${this.course.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(changes),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                }));
 
-
+                saveCourse$.subscribe();
+            });
     }
+
 
 
 
