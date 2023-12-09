@@ -67,11 +67,17 @@ export class CourseComponent implements OnInit, AfterViewInit {
          * - initialLessons$ will run first and completed. The initial list will be load
          * - Then start searchLesson$
          */
+        /** 
+         * Throttling vs Debouncing
+         * - throtting to implement rate limit
+         * - debouncing to wait the output stable
+         */
         this.lessons$ = fromEvent(this.input.nativeElement, 'keyup')
             .pipe(
                 map((event: any) => event.target.value),
                 startWith(''),
                 debounceTime(400),
+                // throttleTime(400),
                 distinctUntilChanged(),
                 // concatMap(search => this.loadLessons(search))
                 switchMap(search => this.loadLessons(search))
