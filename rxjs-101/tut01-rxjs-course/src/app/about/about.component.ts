@@ -19,6 +19,7 @@ export class AboutComponent implements OnInit {
     // this.sample03_Concatenation01();
     // this.sample03_Concatenation02();
     // this.sample04_Merge();
+    this.sample05_Unsubscribe();
   }
 
   sample01_BuildHttpObservable() {
@@ -110,5 +111,14 @@ export class AboutComponent implements OnInit {
     const interval2$ = interval1$.pipe(map(vl => 10 * vl));
     const result$ = merge(interval1$, interval2$);
     result$.subscribe(console.log);
+  }
+
+  /**
+   * Example unsubscribe and cancel request
+   */
+  sample05_Unsubscribe() {
+    const http$ = createHttpObservable('/api/courses');
+    const sub = http$.subscribe(console.log);
+    setTimeout(() => sub.unsubscribe(), 0);
   }
 }
