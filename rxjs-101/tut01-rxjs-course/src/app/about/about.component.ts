@@ -15,7 +15,7 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
 
     // this.sample01_BuildHttpObservable();
-    this.sample02_MapOperator();
+    // this.sample02_MapOperator();
   }
 
   sample01_BuildHttpObservable() {
