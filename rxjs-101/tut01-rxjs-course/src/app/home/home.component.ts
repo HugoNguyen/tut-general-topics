@@ -21,9 +21,16 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         const http$ = createHttpObservable('/api/courses');
 
+        /* Apply shareRelay()
+        * Result: 
+        *   "HTTP request executed" print 1 time
+        *   network api call 1 time
+        */
         const course$: Observable<Course[]> = http$
           .pipe(
-            map(res => res['payload'])
+            tap(() => console.log(`HTTP request executed`)),
+            map(res => res['payload']),
+            shareReplay(),
           );
 
         this.beginnerCourses$ = course$
