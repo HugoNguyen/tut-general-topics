@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Observable, concat, forkJoin, interval, merge, noop, of, timer } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Observable, ReplaySubject, Subject, concat, forkJoin, interval, merge, noop, of, timer } from 'rxjs';
 import { createHttpObservable } from '../common/util';
 import { map, take } from 'rxjs/operators';
 import { RxJsLoggingLevel, debug, setRxjsLoggingLevel } from '../common/debug';
@@ -23,6 +23,10 @@ export class AboutComponent implements OnInit {
     // this.sample05_Unsubscribe();
     // this.sample06_Debug();
     // this.sample07_ForkJoin();
+    // this.sample08_Subject();
+    // this.sample09_BehaviorSubject();
+    // this.sample10_AsyncSubject();
+    // this.sample11_ReplaySubject();
   }
 
   sample01_BuildHttpObservable() {
@@ -149,5 +153,119 @@ export class AboutComponent implements OnInit {
     // Logs:
     // [4, 8, 0] after 4 seconds
     // 'This is how it ends!' immediately after
+  }
+
+  /**
+   * Output:
+   *  early sub:1
+   *  early sub:2
+   *  early sub:3
+   *  early sub: 4 // after 3s
+   *  late sub: 4
+   * Explanation:
+   * - Subject is both Observable and Observer
+   * - Plan Subject does not support late subscription
+   * - Values emitted before the second subscription established will not be shown
+   * - After 3s, new value emitted, and both subscription will receive value
+   */
+  sample08_Subject() {
+    const subject = new Subject();
+
+    const series$ = subject.asObservable();
+    series$.subscribe(val => console.log(`early sub:` + val));
+    
+    subject.next(1);
+    subject.next(2);
+    subject.next(3);
+    // subject.complete();
+
+    setTimeout(() => {
+      series$.subscribe(val => console.log('late sub:' + val));
+      subject.next(4);
+    }, 3000);
+    
+  }
+
+  /**
+   * Output:
+   *  early sub:0
+   *  early sub:1
+   *  early sub:2
+   *  early sub:3
+   *  late sub: 3 // after 3s
+   * Explanation:
+   * - BehaviorSubject emits its current value whenever it is subscribed to.
+   * - After 3s, the second subscription established, it will receive the last value of subject
+   * Note:
+   * - if subject completed before the second subscription established.
+   *    It will not receive the last value of subject
+   */
+  sample09_BehaviorSubject() {
+    const subject = new BehaviorSubject(0);
+
+    const series$ = subject.asObservable();
+    series$.subscribe(val => console.log(`early sub:` + val));
+    
+    subject.next(1);
+    subject.next(2);
+    subject.next(3);
+    // subject.complete(); // late sub: 3 will not show
+
+    setTimeout(() => {
+      series$.subscribe(val => console.log('late sub:' + val));
+    }, 3000);
+  }
+
+  /**
+   * Output:
+   *  first sub:3
+   *  second sub:3 // after 3s
+   * Explanation:
+   *  - AsyncSubject will emit its latest value to all its observers on completion.
+   */
+  sample10_AsyncSubject() {
+    const subject = new AsyncSubject();
+
+    const series$ = subject.asObservable();
+    series$.subscribe(val => console.log(`first sub:` + val));
+    
+    subject.next(1);
+    subject.next(2);
+    subject.next(3);
+    subject.complete(); // If subject does not complete, it will not emit value.
+
+    setTimeout(() => {
+      series$.subscribe(val => console.log('second sub:' + val));
+    }, 3000);
+  }
+
+  /**
+   * Output:
+   *  first sub:1
+   *  first sub:2
+   *  first sub:3
+   *  second sub:1 // after 3s
+   *  second sub:2
+   *  second sub:3
+   *  first sub:4
+   *  second sub:3
+   * Explanation:
+   *  - ReplaySubject will "replays" old values
+   *      to new subscribers by emitting them when they first subscribe.
+   */
+  sample11_ReplaySubject() {
+    const subject = new ReplaySubject();
+
+    const series$ = subject.asObservable();
+    series$.subscribe(val => console.log(`first sub:` + val));
+    
+    subject.next(1);
+    subject.next(2);
+    subject.next(3);
+
+    setTimeout(() => {
+      series$.subscribe(val => console.log('second sub:' + val));
+      subject.next(4);
+    }, 3000);
   }
 }
