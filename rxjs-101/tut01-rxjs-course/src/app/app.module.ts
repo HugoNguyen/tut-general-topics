@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button'
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import { HomeComponent } from './home/home.component';
+import { HomeComponent as HomeV2Component } from './home.v2/home.component';
 import { AboutComponent } from './about/about.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
@@ -33,6 +34,7 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
     declarations: [
         AppComponent,
         HomeComponent,
+        HomeV2Component,
         AboutComponent,
         CourseComponent,
         CoursesCardListComponent,

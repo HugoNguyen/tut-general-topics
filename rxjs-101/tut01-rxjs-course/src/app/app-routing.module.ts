@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from "./home/home.component";
+import {HomeComponent as HomeV2Component} from './home.v2/home.component';
 import {AboutComponent} from "./about/about.component";
 import {CourseComponent} from "./course/course.component";
 
@@ -17,6 +18,11 @@ const routes: Routes = [
     {
         path: 'courses/:id',
         component: CourseComponent
+    },
+    {
+        path: "v2",
+        component: HomeV2Component
+
     },
     {
         path: "**",
