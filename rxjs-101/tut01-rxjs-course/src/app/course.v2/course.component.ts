@@ -43,18 +43,30 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
         this.courseId = this.route.snapshot.params['id'];
 
-        this.course$ = this.store.selectCourseById(this.courseId)
-            .pipe(
-                // first(),
-                take(1)
-            );
+        this.course$ = this.store.selectCourseById(this.courseId);
 
         /**
          * Because course$ is a long running observable
          * That why we must force course$ end with first() operator
          * If not loadLessons will never be called
          */
+        /*
+        this.course$ = this.store.selectCourseById(this.courseId)
+            .pipe(
+                // first(),
+                take(1)
+            );
         forkJoin([this.course$, this.loadLessons()])
+            .subscribe(console.log);
+        */
+
+        /**
+         * Replace force join with withLastestFrom
+         */
+        this.loadLessons()
+            .pipe(
+                withLatestFrom(this.course$)
+            )
             .subscribe(console.log);
     }
 
