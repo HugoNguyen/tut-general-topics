@@ -15,6 +15,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
 import { CoursesCardListComponent as CoursesCardListV2Component } from './courses-card-list.v2/courses-card-list.component';
 import {CourseComponent} from "./course/course.component";
+import {CourseComponent as CourseV2Component} from "./course.v2/course.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import {  MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
@@ -39,6 +40,7 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
         HomeV2Component,
         AboutComponent,
         CourseComponent,
+        CourseV2Component,
         CoursesCardListComponent,
         CoursesCardListV2Component,
         CourseDialogComponent,
