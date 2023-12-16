@@ -13,6 +13,7 @@ import { HomeComponent as HomeV2Component } from './home.v2/home.component';
 import { AboutComponent } from './about/about.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
+import { CoursesCardListComponent as CoursesCardListV2Component } from './courses-card-list.v2/courses-card-list.component';
 import {CourseComponent} from "./course/course.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import {  MatDialogModule } from "@angular/material/dialog";
@@ -27,6 +28,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
 import { CourseDialogComponent } from './course-dialog/course-dialog.component';
+import { CourseDialogComponent as CourseDialogV2Component } from './course-dialog.v2/course-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 
@@ -38,7 +40,9 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
         AboutComponent,
         CourseComponent,
         CoursesCardListComponent,
-        CourseDialogComponent
+        CoursesCardListV2Component,
+        CourseDialogComponent,
+        CourseDialogV2Component
     ],
     imports: [
         BrowserModule,

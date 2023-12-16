@@ -47,25 +47,6 @@ export class Store {
             );
     }
 
-    saveDraft(courseId: number, changes) {
-        const courses = this.subject.getValue();
-
-        const courseIndex = courses.findIndex(course => course.id == courseId);
-
-        const newCourses = courses.slice(0);
-
-        newCourses[courseIndex] = {
-            ...courses[courseIndex],
-            ...changes,
-        };
-
-        return of(newCourses)
-            .pipe(
-                debounceTime(2000),
-                tap(_ => this.subject.next(newCourses)),
-            )
-    }
-
     saveCourse(courseId: number, changes) {
 
         const courses = this.subject.getValue();

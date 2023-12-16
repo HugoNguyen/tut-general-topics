@@ -7,7 +7,7 @@ import { Store } from '../common/store.service';
 
 
 @Component({
-    selector: 'home',
+    selector: 'home-v2',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
