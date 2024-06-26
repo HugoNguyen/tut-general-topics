@@ -47,3 +47,9 @@
 
 ## proj08-airconditioner
 - [Source](https://code-maze.com/factory-method/)
+
+## proj09-singleton
+- [Source](https://code-maze.com/singleton/)
+
+## proj10-prototype, proj11-protypeRegistry
+- [Source](https://dev.to/kalkwst/prototype-pattern-in-c-2fnh)
