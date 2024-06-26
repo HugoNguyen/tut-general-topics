@@ -41,3 +41,9 @@
 - [Source](https://www.youtube.com/watch?v=qCIr30WxJQw)
 - Fluent Builder
 - Use action to implement Nest Builder
+
+## proj07-factorymethod
+- [Source](https://refactoring.guru/design-patterns/factory-method/csharp/example)
+
+## proj08-airconditioner
+- [Source](https://code-maze.com/factory-method/)
