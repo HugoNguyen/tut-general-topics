@@ -1,0 +1,24 @@
+<span>
+  <ng-content />
+</span>
+<!--
+    Opt1: content with class icon will be projected into this holder
+    https://angular.dev/guide/components/content-projection#multiple-content-placeholders
+-->
+<!-- <ng-content select=".icon" /> -->
+
+<span class="icon">
+  <!--
+    Opt2: define selector for this holder.
+    Element with tag <icon> or element use ngProjectAs='icon'
+    will be projected into this holder
+    https://angular.dev/guide/components/content-projection#aliasing-content-for-projection
+  -->
+  <ng-content select="icon">
+    <!-- 
+        define a fallback. If there's no content be found. Project this
+        https://angular.dev/guide/components/content-projection#fallback-content
+    -->
+    → 
+  </ng-content>
+</span>
