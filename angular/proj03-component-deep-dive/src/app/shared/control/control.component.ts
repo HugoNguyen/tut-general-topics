@@ -1,4 +1,4 @@
-import { Component, ContentChild, contentChild, ElementRef, HostBinding, HostListener, inject, input, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, afterNextRender, afterRender, Component, ContentChild, contentChild, ElementRef, HostBinding, HostListener, inject, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -12,7 +12,7 @@ import { Component, ContentChild, contentChild, ElementRef, HostBinding, HostLis
     '(click)': 'onClick()'
   }
 })
-export class ControlComponent {
+export class ControlComponent implements AfterContentInit {
   // @HostBinding('class') className = 'control';
   // @HostListener('click') onClick() {
   //   console.log('Clicked');
@@ -23,6 +23,22 @@ export class ControlComponent {
   private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
 
   label = input.required();
+
+  constructor() {
+    /* Introduce afterRender and afterNextRender hooks */
+    /* These hooks are special, they listen change on entire application */
+    afterRender(() => {
+      console.log('After render');
+    });
+
+    afterNextRender(() => {
+      console.log('After next render');
+    });
+  }
+
+  ngAfterContentInit(): void {
+    // throw new Error('Method not implemented.');
+  }
 
   onClick() {
     console.log(this.el);
