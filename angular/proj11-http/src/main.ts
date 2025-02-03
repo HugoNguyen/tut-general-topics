@@ -1,8 +1,9 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 
 import { AppComponent } from './app/app.component';
-import { HttpEventType, HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpEventType, HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { tap } from 'rxjs';
+import { LoggingInterceptor } from './app/loggin-interceptor';
 
 function logginInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn) {
     // const req = request.clone({
@@ -24,7 +25,11 @@ function logginInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn) {
 }
 
 bootstrapApplication(AppComponent, {
-    providers: [provideHttpClient(
-        withInterceptors([logginInterceptor])
-    )]
+    providers: [
+        provideHttpClient(
+            // withInterceptors([logginInterceptor]),
+            withInterceptorsFromDi()
+        ),
+        { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true }
+    ],
 }).catch((err) => console.error(err));
