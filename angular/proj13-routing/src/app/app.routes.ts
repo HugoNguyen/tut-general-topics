@@ -16,6 +16,11 @@ export const routes: Routes = [
         component: UserTasksComponent,
         children: [
             {
+                path: '', // <domain>/users/<uid>
+                redirectTo: 'tasks',
+                pathMatch: 'prefix',
+            },
+            {
                 path: 'tasks', // <domain>/users/<uid>/tasks
                 component: TasksComponent,
             },
