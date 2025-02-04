@@ -19,6 +19,7 @@ export class UserTasksComponent implements OnInit {
   
   // Op2: Extracting Dynamic Route Parameters via ActiviatedRoute
   userId = signal<string>('');
+  message = input.required<string>();
 
   private usersService = inject(UsersService);
   private activatedRoute = inject(ActivatedRoute);
@@ -27,6 +28,7 @@ export class UserTasksComponent implements OnInit {
   userName = computed(() => this.usersService.users.find(u => u.id === this.userId())?.name);
 
   ngOnInit() {
+    console.log('Input Data: ' + this.message());
     const subscription = this.activatedRoute.paramMap.subscribe({
       next: paramMap => {
         this.userId.set(paramMap.get('userId') || '');
