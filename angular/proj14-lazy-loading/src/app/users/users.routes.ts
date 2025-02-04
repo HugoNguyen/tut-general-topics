@@ -29,21 +29,27 @@ export const resolveUserTasks: ResolveFn<Task[]> = (
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'tasks',
-    pathMatch: 'full',
-  },
-  {
-    path: 'tasks', // <your-domain>/users/<uid>/tasks
-    loadComponent: () => 
-      import('../tasks/tasks.component').then((m) => m.TasksComponent),
-    runGuardsAndResolvers: 'always',
-    resolve: {
-      userTasks: resolveUserTasks,
-    },
-  },
-  {
-    path: 'tasks/new',
-    component: NewTaskComponent,
-    canDeactivate: [canLeaveEditPage]
-  },
+    providers: [TasksService],
+    children: [
+      {
+        path: '',
+        redirectTo: 'tasks',
+        pathMatch: 'full',
+      },
+      {
+        path: 'tasks', // <your-domain>/users/<uid>/tasks
+        loadComponent: () => 
+          import('../tasks/tasks.component').then((m) => m.TasksComponent),
+        runGuardsAndResolvers: 'always',
+        resolve: {
+          userTasks: resolveUserTasks,
+        },
+      },
+      {
+        path: 'tasks/new',
+        component: NewTaskComponent,
+        canDeactivate: [canLeaveEditPage]
+      },
+    ]
+  }
 ];
