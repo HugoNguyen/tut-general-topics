@@ -6,6 +6,11 @@ export const increment = createAction(
     props<{value: number}>()
 );
 
+export const decrement = createAction(
+    '[Counter] Decrement',
+    props<{value: number}>()
+);
+
 // Op2: not use createAction
 // export class IncrementAction implements Action {
 //     readonly type = '[Counter] Increment';
