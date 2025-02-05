@@ -1,0 +1,16 @@
+<main>
+  <app-learning-resources />
+
+  <hr />
+
+  <app-auth />
+
+  <!-- <p *ngIf="isAdmin()">Only Admin can see this</p> -->
+  <!-- <ng-template appAuth="admin">
+    <p>Only Admin can see this</p>
+  </ng-template> -->
+  <!-- https://angular.dev/guide/directives/structural-directives#structural-directive-shorthand -->
+  <p *appAuth="'admin'" class="protected-content admin">Only Admin can see this</p>
+  <p *appAuth="'user'" class="protected-content unauthenticated">Regular users should see this</p>
+  <p *appAuth="'guest'" class="protected-content authenticated">Guest users should see this</p>
+</main>
