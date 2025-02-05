@@ -6,7 +6,7 @@ const initialState = 0;
 // Op1: use ulity fn createReducer
 export const counterReducer = createReducer(
     initialState,
-    on(increment, state => state + 1),
+    on(increment, (state, action) => state + action.value),
 );
 
 // Op2: not use ulity fn createReducer
