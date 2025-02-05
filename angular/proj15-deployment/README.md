@@ -1,4 +1,10 @@
-# Add SSR to angular project
+# SSR
 $npx -p @angular/cli@18.2.9 ng add @angular/ssr
-# Run server side project
+$npm run build
+$npm run serve:ssr:routing
+
+# SSG
+$npx -p @angular/cli@18.2.9 ng add @angular/ssr
+- specific routes are prerendering
+$npm run build
 $npm run serve:ssr:routing
