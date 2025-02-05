@@ -1,5 +1,6 @@
-import { createReducer, on } from "@ngrx/store";
+import { Action, createReducer, on } from "@ngrx/store";
 import { increment } from "./counter.actions";
+// import { CounterAction, IncrementAction } from "./counter.actions";
 
 const initialState = 0;
 
@@ -10,6 +11,9 @@ export const counterReducer = createReducer(
 );
 
 // Op2: not use ulity fn createReducer
-// export function counterReducer(state = initialState, action: any) {
+// export function counterReducer(state = initialState, action: CounterAction | Action) {
+//     if (action.type === '[Counter] Increment') {
+//         return state + (action as IncrementAction).value;
+//     }
 //     return state;
 // }
