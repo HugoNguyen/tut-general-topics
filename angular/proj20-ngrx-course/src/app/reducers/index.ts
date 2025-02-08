@@ -16,6 +16,7 @@ export const reducers: ActionReducerMap<AppState> = {
     router: routerReducer, // to integrate with router store for debugger
 };
 
+
 export function logger(reducer:ActionReducer<any>)
     : ActionReducer<any> {
     return (state, action) => {
@@ -27,7 +28,7 @@ export function logger(reducer:ActionReducer<any>)
 
 }
 
-
+// metareducers run before normal reducers
 export const metaReducers: MetaReducer<AppState>[] =
     !environment.production ? [logger] : [];
 
