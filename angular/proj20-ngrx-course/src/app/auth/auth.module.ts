@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import {AuthService} from "./auth.service";
 import { EffectsModule } from '@ngrx/effects';
 import * as fromAuth from './reducers';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ export class AuthModule {
         return {
             ngModule: AuthModule,
             providers: [
-              AuthService
+              AuthService,
+              AuthGuard
             ]
         }
     }

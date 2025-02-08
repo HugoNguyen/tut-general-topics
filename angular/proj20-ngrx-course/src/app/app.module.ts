@@ -23,12 +23,14 @@ import {EntityDataModule} from '@ngrx/data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { entityConfig } from './entity-metadata';
 import { metaReducers, reducers } from './reducers';
+import { AuthGuard } from './auth/auth.guard';
 
 
 const routes: Routes = [
   {
     path: 'courses',
-    loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule)
+    loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
