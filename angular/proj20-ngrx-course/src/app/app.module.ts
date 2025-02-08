@@ -22,6 +22,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {EntityDataModule} from '@ngrx/data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { entityConfig } from './entity-metadata';
+import { metaReducers, reducers } from './reducers';
 
 
 const routes: Routes = [
@@ -50,10 +51,7 @@ const routes: Routes = [
         MatListModule,
         MatToolbarModule,
         AuthModule.forRoot(),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-        EntityDataModule.forRoot(entityConfig),
-        StoreModule.forRoot({}, {}),
-        EffectsModule.forRoot([]),
-        StoreRouterConnectingModule.forRoot()], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        StoreModule.forRoot(reducers, { metaReducers}),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
