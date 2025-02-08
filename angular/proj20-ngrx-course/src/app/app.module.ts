@@ -43,17 +43,22 @@ const routes: Routes = [
 @NgModule({ declarations: [
         AppComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(routes),
-        MatMenuModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatProgressSpinnerModule,
-        MatListModule,
-        MatToolbarModule,
-        AuthModule.forRoot(),
-        StoreModule.forRoot(reducers, { metaReducers}),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),], providers: [provideHttpClient(withInterceptorsFromDi())] })
+    bootstrap: [AppComponent],
+    imports: [
+      BrowserModule,
+      BrowserAnimationsModule,
+      RouterModule.forRoot(routes),
+      MatMenuModule,
+      MatIconModule,
+      MatSidenavModule,
+      MatProgressSpinnerModule,
+      MatListModule,
+      MatToolbarModule,
+      AuthModule.forRoot(),
+      StoreModule.forRoot(reducers, { metaReducers}),
+      StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+      EffectsModule.forRoot([]),
+    ],
+    providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
