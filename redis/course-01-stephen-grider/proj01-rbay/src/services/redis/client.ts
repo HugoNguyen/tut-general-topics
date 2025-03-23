@@ -1,4 +1,9 @@
 import { createClient, defineScript } from 'redis';
+import {
+    itemsKey,
+    itemsByViewsKey,
+    itemsViewsKey,
+} from '$services/keys';
 
 const client = createClient({
 	socket: {
@@ -20,6 +25,34 @@ const client = createClient({
 			transformReply(reply: any) {
 				return reply;
 			}
+		}),
+		incrementView: defineScript({
+			NUMBER_OF_KEYS: 3,
+			SCRIPT: `
+				local itemsViewsKey = KEYS[1]
+				local itemsKey = KEYS[2]
+				local itemsByViewsKey = KEYS[3]
+				local itemId = ARGV[1]
+				local userId = ARGV[2]
+
+				local inserted = redis.call('PFADD', itemsViewsKey, userId)
+
+				if inserted == 1 then
+					redis.call('HINCRBY', itemsKey, 'views', 1)
+					redis.call('ZINCRBY', itemsByViewsKey, 1, itemId)
+				end
+			`,
+			transformArguments(itemId: string, userId: string) {
+				return [
+					itemsViewsKey(itemId), // -> items:views#<itemId>
+					itemsKey(itemId), // -> items#<itemId>
+					itemsByViewsKey(), // -> items:views
+					itemId,
+					userId
+				]
+				// EVALSHA <ID> 3 'items:views#<itemId>' 'items#<itemId>' 'items:views' '<itemId>' '<userId>'
+			},
+			transformReply() {}
 		})
 	}
 });
