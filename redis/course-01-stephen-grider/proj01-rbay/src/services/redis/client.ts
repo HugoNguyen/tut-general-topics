@@ -4,6 +4,7 @@ import {
     itemsByViewsKey,
     itemsViewsKey,
 } from '$services/keys';
+import { createIndexes } from './create-indexes';
 
 const client = createClient({
 	socket: {
@@ -72,9 +73,15 @@ const client = createClient({
 });
 
 client.on('connect', async () => {
-	client.addOneAndStore('books:count', 5);
-	const result = await client.get('books:count');
-	console.log(result); // 6
+	// client.addOneAndStore('books:count', 5);
+	// const result = await client.get('books:count');
+	// console.log(result); // 6
+	try {
+		await createIndexes();
+	} catch(err) {
+		console.error(err);
+	}
+	
 });
 
 client.on('error', (err) => console.error(err));
