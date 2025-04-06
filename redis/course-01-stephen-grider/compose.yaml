@@ -1,0 +1,12 @@
+#docker exec -it redis-stack redis-cli
+services:
+  redis:
+    image: "redis/redis-stack:7.2.0-v15"
+    volumes:
+      - .redis-local-data:/data
+    environment:
+      REDIS_ARGS: "--requirepass NuFWUgzUfsZsxOA"
+    ports:
+      - "6379:6379" # Redis host
+      - "8001:8001" # RedisInsight
+    restart: unless-stopped
