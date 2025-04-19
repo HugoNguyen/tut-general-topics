@@ -29,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "exchange2exchange", "exchan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExToExDemo", "ExToExDemo\ExToExDemo.csproj", "{561FEC53-CE00-4455-A753-5738C9A42487}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "alternate-exchange", "alternate-exchange", "{C2D8BB90-FDB3-47DD-B72F-A5D71BC02510}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlternateDemo", "AlternateDemo\AlternateDemo.csproj", "{10A0C0DB-4932-4B48-A75E-9E951F33FF38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,10 @@ Global
 		{561FEC53-CE00-4455-A753-5738C9A42487}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{561FEC53-CE00-4455-A753-5738C9A42487}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{561FEC53-CE00-4455-A753-5738C9A42487}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10A0C0DB-4932-4B48-A75E-9E951F33FF38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10A0C0DB-4932-4B48-A75E-9E951F33FF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10A0C0DB-4932-4B48-A75E-9E951F33FF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10A0C0DB-4932-4B48-A75E-9E951F33FF38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,5 +83,6 @@ Global
 		{78938D7F-83AD-48FF-969C-01523E5A57C6} = {4E608CE1-85BF-41A7-B4F6-3FE2A0439B14}
 		{32117E0E-4EE3-435F-8041-858A432A8175} = {99AF457A-CA0C-4EFE-AEC0-D33ECBB1E11E}
 		{561FEC53-CE00-4455-A753-5738C9A42487} = {8F5A9033-7782-4DC0-AF04-6D08C82DF979}
+		{10A0C0DB-4932-4B48-A75E-9E951F33FF38} = {C2D8BB90-FDB3-47DD-B72F-A5D71BC02510}
 	EndGlobalSection
 EndGlobal
