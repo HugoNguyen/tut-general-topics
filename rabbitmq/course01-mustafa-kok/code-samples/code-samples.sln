@@ -47,6 +47,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkQueueDemo.Publisher", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkQueueDemo.Consumer", "WorkQueueDemo.Consumer\WorkQueueDemo.Consumer.csproj", "{46461FFA-E28F-48D8-B6E6-C651E78E9F92}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pub-sub-pattern", "pub-sub-pattern", "{A739B403-4616-486D-9338-A32BF26A2947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubSubPatternDemo.Publisher", "PubSubPatternDemo.Publisher\PubSubPatternDemo.Publisher.csproj", "{832D91AA-A1F4-418A-A55A-5A4EBDCB7E1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubSubPatternDemo.Subscriber", "PubSubPatternDemo.Subscriber\PubSubPatternDemo.Subscriber.csproj", "{0448177A-4F46-431D-BBBB-D7BF61BE91DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +111,14 @@ Global
 		{46461FFA-E28F-48D8-B6E6-C651E78E9F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46461FFA-E28F-48D8-B6E6-C651E78E9F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46461FFA-E28F-48D8-B6E6-C651E78E9F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{832D91AA-A1F4-418A-A55A-5A4EBDCB7E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{832D91AA-A1F4-418A-A55A-5A4EBDCB7E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{832D91AA-A1F4-418A-A55A-5A4EBDCB7E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{832D91AA-A1F4-418A-A55A-5A4EBDCB7E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0448177A-4F46-431D-BBBB-D7BF61BE91DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0448177A-4F46-431D-BBBB-D7BF61BE91DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0448177A-4F46-431D-BBBB-D7BF61BE91DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0448177A-4F46-431D-BBBB-D7BF61BE91DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,5 +137,7 @@ Global
 		{7957E055-41D0-43CE-8290-33DBF23905D9} = {50067E5E-090A-40D1-9593-1A81E31D2C9C}
 		{6842D060-15C0-4AFD-B849-B031394A688C} = {9F75C856-0F8E-43CC-99A6-F50571C5DEEA}
 		{46461FFA-E28F-48D8-B6E6-C651E78E9F92} = {9F75C856-0F8E-43CC-99A6-F50571C5DEEA}
+		{832D91AA-A1F4-418A-A55A-5A4EBDCB7E1B} = {A739B403-4616-486D-9338-A32BF26A2947}
+		{0448177A-4F46-431D-BBBB-D7BF61BE91DE} = {A739B403-4616-486D-9338-A32BF26A2947}
 	EndGlobalSection
 EndGlobal
