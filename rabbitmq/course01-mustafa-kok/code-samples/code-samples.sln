@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FanoutPublisher", "FanoutPublisher\FanoutPublisher.csproj", "{949F7334-FC6E-4D0F-91D0-E9F94A162F58}"
 EndProject
@@ -32,6 +32,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "alternate-exchange", "alternate-exchange", "{C2D8BB90-FDB3-47DD-B72F-A5D71BC02510}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlternateDemo", "AlternateDemo\AlternateDemo.csproj", "{10A0C0DB-4932-4B48-A75E-9E951F33FF38}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "push-pull-models", "push-pull-models", "{50067E5E-090A-40D1-9593-1A81E31D2C9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushAndPullDemo.Publisher", "PushAndPullDemo.Publisher\PushAndPullDemo.Publisher.csproj", "{FA4B265D-9FF7-40A3-B190-C287A5B3DD6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushAndPullDemo.PushConsumer", "PushAndPullDemo.PushConsumer\PushAndPullDemo.PushConsumer.csproj", "{B00347C5-8FD4-494F-8EA4-D18FD3209431}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushAndPullDemo.PullConsumer", "PushAndPullDemo.PullConsumer\PushAndPullDemo.PullConsumer.csproj", "{7957E055-41D0-43CE-8290-33DBF23905D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +79,18 @@ Global
 		{10A0C0DB-4932-4B48-A75E-9E951F33FF38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10A0C0DB-4932-4B48-A75E-9E951F33FF38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10A0C0DB-4932-4B48-A75E-9E951F33FF38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4B265D-9FF7-40A3-B190-C287A5B3DD6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4B265D-9FF7-40A3-B190-C287A5B3DD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4B265D-9FF7-40A3-B190-C287A5B3DD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4B265D-9FF7-40A3-B190-C287A5B3DD6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00347C5-8FD4-494F-8EA4-D18FD3209431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00347C5-8FD4-494F-8EA4-D18FD3209431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00347C5-8FD4-494F-8EA4-D18FD3209431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00347C5-8FD4-494F-8EA4-D18FD3209431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7957E055-41D0-43CE-8290-33DBF23905D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7957E055-41D0-43CE-8290-33DBF23905D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7957E055-41D0-43CE-8290-33DBF23905D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7957E055-41D0-43CE-8290-33DBF23905D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,5 +104,8 @@ Global
 		{32117E0E-4EE3-435F-8041-858A432A8175} = {99AF457A-CA0C-4EFE-AEC0-D33ECBB1E11E}
 		{561FEC53-CE00-4455-A753-5738C9A42487} = {8F5A9033-7782-4DC0-AF04-6D08C82DF979}
 		{10A0C0DB-4932-4B48-A75E-9E951F33FF38} = {C2D8BB90-FDB3-47DD-B72F-A5D71BC02510}
+		{FA4B265D-9FF7-40A3-B190-C287A5B3DD6E} = {50067E5E-090A-40D1-9593-1A81E31D2C9C}
+		{B00347C5-8FD4-494F-8EA4-D18FD3209431} = {50067E5E-090A-40D1-9593-1A81E31D2C9C}
+		{7957E055-41D0-43CE-8290-33DBF23905D9} = {50067E5E-090A-40D1-9593-1A81E31D2C9C}
 	EndGlobalSection
 EndGlobal
