@@ -1,6 +1,9 @@
 ﻿using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using System.Text;
+using System.Collections.Concurrent;
+using RequestResponsePatternDemo.Common;
+using Newtonsoft.Json;
 
 namespace RequestResponsePatternDemo.Requestor
 {
@@ -8,6 +11,8 @@ namespace RequestResponsePatternDemo.Requestor
     {
         async static Task Main(string[] args)
         {
+            ConcurrentDictionary<string, CalculationRequest> waitingRequest = new ConcurrentDictionary<string, CalculationRequest>();
+
             //1. Set up connection and channel
             ConnectionFactory factory = new ConnectionFactory();
             factory.HostName = "localhost";
@@ -23,9 +28,16 @@ namespace RequestResponsePatternDemo.Requestor
             var consumer = new AsyncEventingBasicConsumer(channel);
             consumer.ReceivedAsync += async (ch, ea) =>
             {
-                var body = ea.Body.ToArray();
-                string message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($"Response received: {message}");
+                var requestId = Encoding.UTF8.GetString((byte[])ea.BasicProperties.Headers![Common.Constants.RequestIdHeaderKey]!);
+                CalculationRequest? request;
+                if (waitingRequest.TryGetValue(requestId, out request))
+                {
+                    var body = ea.Body.ToArray();
+                    string messageData = Encoding.UTF8.GetString(body);
+                    var response = JsonConvert.DeserializeObject<CalculationResponse>(messageData);
+                    Console.WriteLine($"Calculation result: {request} = {response}");
+                }
+
                 await Task.CompletedTask;
             };
 
@@ -33,27 +45,44 @@ namespace RequestResponsePatternDemo.Requestor
             var consumerTag = await channel.BasicConsumeAsync("my.responses", true, consumer);
 
             //4. Send messages to response
-            while (true)
-            {
-                Console.Write("Enter your request: ");
-                var request = Console.ReadLine();
+            Console.WriteLine("Press a key to send requests");
+            Console.ReadKey();
 
-                if (request == null || request == string.Empty)
-                {
-                    continue;
-                }
+            await SendRequest(waitingRequest, channel, new CalculationRequest(2, 4, OperationType.Add));
+            await SendRequest(waitingRequest, channel, new CalculationRequest(16, 4, OperationType.Subtract));
+            await SendRequest(waitingRequest, channel, new CalculationRequest(50, 2, OperationType.Add));
+            await SendRequest(waitingRequest, channel, new CalculationRequest(30, 6, OperationType.Subtract));
 
-                if (request == "exit")
-                {
-                    break;
-                }
-
-                await channel.BasicPublishAsync("", "my.requests", Encoding.UTF8.GetBytes(request));
-            }
+            Console.WriteLine($"Press any key to exit.");
+            Console.ReadKey();
 
             //5. Close channel and connection
             await channel.CloseAsync();
             await conn.CloseAsync();
+        }
+
+        private static async Task SendRequest(
+            ConcurrentDictionary<string, CalculationRequest> waitingRequest,
+            IChannel channel,
+            CalculationRequest request)
+        {
+            var requestId = Guid.NewGuid().ToString();
+            var requestData = JsonConvert.SerializeObject(request);
+
+            waitingRequest[requestId] = request;
+
+            await channel.BasicPublishAsync(
+                "",
+                "my.requests",
+                mandatory: true,
+                basicProperties: new BasicProperties()
+                {
+                    Headers = new Dictionary<string, object?>()
+                    {
+                        { Common.Constants.RequestIdHeaderKey, Encoding.UTF8.GetBytes(requestId) },
+                    }
+                },
+                Encoding.UTF8.GetBytes(requestData));
         }
     }
 }

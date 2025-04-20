@@ -1,6 +1,8 @@
 ﻿using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using System.Text;
+using Newtonsoft.Json;
+using RequestResponsePatternDemo.Common;
 
 namespace RequestResponsePatternDemo.Replier
 {
@@ -24,12 +26,40 @@ namespace RequestResponsePatternDemo.Replier
             consumer.ReceivedAsync += async (ch, ea) =>
             {
                 var body = ea.Body.ToArray();
-                string request = Encoding.UTF8.GetString(body);
+                string requestData = Encoding.UTF8.GetString(body);
+                var request = JsonConvert.DeserializeObject<CalculationRequest>(requestData);
+
+                if (request == null)
+                {
+                    return;
+                }
+
                 Console.WriteLine($"Request received: {request}");
 
-                var response = $"Response for {request}";
+                var response = new CalculationResponse();
+                if (request.Operation == OperationType.Add)
+                {
+                    response.Result = request.Number1 + request.Number2;
+                }
+                else if (request.Operation == OperationType.Subtract)
+                {
+                    response!.Result = request.Number1 - request.Number2;
+                }
 
-                await channel.BasicPublishAsync("", "my.responses", Encoding.UTF8.GetBytes(response));
+                var responseData = JsonConvert.SerializeObject(response);
+
+                await channel.BasicPublishAsync(
+                "",
+                "my.responses",
+                mandatory: true,
+                basicProperties: new BasicProperties()
+                {
+                    Headers = new Dictionary<string, object?>()
+                    {
+                        { Common.Constants.RequestIdHeaderKey, ea.BasicProperties.Headers![Common.Constants.RequestIdHeaderKey] },
+                    }
+                },
+                Encoding.UTF8.GetBytes(responseData));
             };
 
             //3. Bind consumer to queue
