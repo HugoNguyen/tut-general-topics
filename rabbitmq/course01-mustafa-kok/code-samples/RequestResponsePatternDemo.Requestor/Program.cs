@@ -24,6 +24,9 @@ namespace RequestResponsePatternDemo.Requestor
             IConnection conn = await factory.CreateConnectionAsync();
             IChannel channel = await conn.CreateChannelAsync();
 
+            var responseQueueName = "my.res." + Guid.NewGuid().ToString();
+            await channel.QueueDeclareAsync(responseQueueName);
+
             //2. Create consumer
             var consumer = new AsyncEventingBasicConsumer(channel);
             consumer.ReceivedAsync += async (ch, ea) =>
@@ -42,21 +45,22 @@ namespace RequestResponsePatternDemo.Requestor
             };
 
             //3. Bind consumer to queue
-            var consumerTag = await channel.BasicConsumeAsync("my.responses", true, consumer);
+            var consumerTag = await channel.BasicConsumeAsync(responseQueueName, true, consumer);
 
             //4. Send messages to response
             Console.WriteLine("Press a key to send requests");
             Console.ReadKey();
 
-            await SendRequest(waitingRequest, channel, new CalculationRequest(2, 4, OperationType.Add));
-            await SendRequest(waitingRequest, channel, new CalculationRequest(16, 4, OperationType.Subtract));
-            await SendRequest(waitingRequest, channel, new CalculationRequest(50, 2, OperationType.Add));
-            await SendRequest(waitingRequest, channel, new CalculationRequest(30, 6, OperationType.Subtract));
+            await SendRequest(waitingRequest, channel, new CalculationRequest(2, 4, OperationType.Add), responseQueueName);
+            await SendRequest(waitingRequest, channel, new CalculationRequest(16, 4, OperationType.Subtract), responseQueueName);
+            await SendRequest(waitingRequest, channel, new CalculationRequest(50, 2, OperationType.Add), responseQueueName);
+            await SendRequest(waitingRequest, channel, new CalculationRequest(30, 6, OperationType.Subtract), responseQueueName);
 
             Console.WriteLine($"Press any key to exit.");
             Console.ReadKey();
 
             //5. Close channel and connection
+            await channel.QueueDeleteAsync(responseQueueName);
             await channel.CloseAsync();
             await conn.CloseAsync();
         }
@@ -64,7 +68,8 @@ namespace RequestResponsePatternDemo.Requestor
         private static async Task SendRequest(
             ConcurrentDictionary<string, CalculationRequest> waitingRequest,
             IChannel channel,
-            CalculationRequest request)
+            CalculationRequest request,
+            string responseQueueName)
         {
             var requestId = Guid.NewGuid().ToString();
             var requestData = JsonConvert.SerializeObject(request);
@@ -80,6 +85,7 @@ namespace RequestResponsePatternDemo.Requestor
                     Headers = new Dictionary<string, object?>()
                     {
                         { Common.Constants.RequestIdHeaderKey, Encoding.UTF8.GetBytes(requestId) },
+                        { Common.Constants.ResponseQueueHeaderKey, Encoding.UTF8.GetBytes(responseQueueName) },
                     }
                 },
                 Encoding.UTF8.GetBytes(requestData));

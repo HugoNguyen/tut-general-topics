@@ -19,7 +19,8 @@ namespace RequestResponsePatternDemo.Setup
 
             //2. Create exchange and queue
             await channel.QueueDeclareAsync("my.requests", durable: true, exclusive: false, autoDelete: false);
-            await channel.QueueDeclareAsync("my.responses", durable: true, exclusive: false, autoDelete: false);
+            //Each requestor will have it own response queue
+            //await channel.QueueDeclareAsync("my.responses", durable: true, exclusive: false, autoDelete: false);
 
             //3. Binding exchange and queue
 
@@ -30,7 +31,7 @@ namespace RequestResponsePatternDemo.Setup
 
             //5. Delete queue and exchange
             await channel.QueueDeleteAsync("my.requests");
-            await channel.QueueDeleteAsync("my.responses");
+            //await channel.QueueDeleteAsync("my.responses");
 
             //6. Close channel and connection
             await channel.CloseAsync();

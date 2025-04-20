@@ -48,9 +48,11 @@ namespace RequestResponsePatternDemo.Replier
 
                 var responseData = JsonConvert.SerializeObject(response);
 
+                var responseQueueName = Encoding.UTF8.GetString((byte[])ea.BasicProperties.Headers![Common.Constants.ResponseQueueHeaderKey]!);
+
                 await channel.BasicPublishAsync(
                 "",
-                "my.responses",
+                responseQueueName,
                 mandatory: true,
                 basicProperties: new BasicProperties()
                 {
