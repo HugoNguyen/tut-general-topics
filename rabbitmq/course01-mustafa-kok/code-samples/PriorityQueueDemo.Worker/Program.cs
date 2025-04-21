@@ -19,6 +19,10 @@ namespace PriorityQueueDemo.Worker
             IConnection conn = await factory.CreateConnectionAsync();
             IChannel channel = await conn.CreateChannelAsync();
 
+            //Don't send a new message to this worker
+            //until it has processed and acknowkedged the last one
+            await channel.BasicQosAsync(0, 1, false); // Limit prefetch count to 1. https://www.rabbitmq.com/docs/consumer-prefetch#overview
+
             //2. Create consumer
             var consumer = new AsyncEventingBasicConsumer(channel);
             consumer.ReceivedAsync += async (ch, ea) =>
@@ -28,13 +32,13 @@ namespace PriorityQueueDemo.Worker
                 Console.Write($"Processing message -> '{message}'...");
                 await Task.Delay(1000);
                 Console.WriteLine("FINISHED");
-                //await channel.BasicAckAsync(ea.DeliveryTag, false);
+                await channel.BasicAckAsync(ea.DeliveryTag, false);
             };
 
             //3. Bind consumer to queue
             var consumerTag = await channel.BasicConsumeAsync(
                 queue: "my.queue",
-                autoAck: true,
+                autoAck: false, // let processor set ack when it done
                 consumer: consumer);
 
             //4. Wait message
