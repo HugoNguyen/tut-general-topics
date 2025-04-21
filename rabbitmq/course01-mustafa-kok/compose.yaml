@@ -1,0 +1,11 @@
+services:
+  rabbitmq:
+    image: "rabbitmq:4.0.8-management"
+    volumes:
+      - .rabbitmq-local/data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=passw@rd
+    ports:
+      - "5672:5672"
+      - "15672:15672" # web management interface
