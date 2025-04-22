@@ -21,5 +21,7 @@ namespace CodingWiki_Model.Models
 
         [NotMapped]
         public string PriceRange { get; set; }
+
+        public BookDetail BookDetail { get; set; }
     }
 }
