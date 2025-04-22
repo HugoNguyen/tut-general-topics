@@ -16,9 +16,9 @@ namespace CodingWiki_Model.Models
         public decimal Price { get; set; }
         public string PriceRange { get; set; }
        
-        public Fluent_BookDetail BookDetail { get; set; }
-        public int Publisher_Id { get; set; }
-        public Fluent_Publisher Publisher { get; set; }
-        public List<Fluent_BookAuthorMap> BookAuthorMap{ get; set; }
+        //public Fluent_BookDetail BookDetail { get; set; }
+        //public int Publisher_Id { get; set; }
+        //public Fluent_Publisher Publisher { get; set; }
+        //public List<Fluent_BookAuthorMap> BookAuthorMap{ get; set; }
     } 
 }
