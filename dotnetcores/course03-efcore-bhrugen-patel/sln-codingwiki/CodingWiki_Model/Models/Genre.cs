@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -7,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace CodingWiki_Model.Models
 {
-    [Table("tb_genres")]
-    public class Genre
+    [Table("Categories")]
+    public class Category
     {
-        public int GenreId { get; set; }
+        [Key]
+        public int CategoryId { get; set; }
         [Column("Name")]
-        public string GenreName { get; set; }
-        public int DisplayOrder {  get; set; }
+        [Required]
+        public string CategoryName { get; set; }
+        //public int DisplayOrder {  get; set; }
     }
 }
