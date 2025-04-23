@@ -74,6 +74,16 @@ namespace CodingWiki_DataAccess.Data
             modelBuilder.Entity<Fluent_Author>().Property(u => u.LastName).IsRequired();
             modelBuilder.Entity<Fluent_Author>().HasKey(u => u.Author_Id);
             modelBuilder.Entity<Fluent_Author>().Ignore(u => u.FullName);
+
+            modelBuilder.Entity<Fluent_BookAuthorMap>().HasKey(u => new { u.Author_Id, u.Book_Id });
+            modelBuilder.Entity<Fluent_BookAuthorMap>()
+                .HasOne(u => u.Book)
+                .WithMany(u => u.BookAuthorMap)
+                .HasForeignKey(u => u.Book_Id);
+            modelBuilder.Entity<Fluent_BookAuthorMap>()
+                .HasOne(u => u.Author)
+                .WithMany(u => u.BookAuthorMap)
+                .HasForeignKey(u => u.Author_Id);
         }
     }
 }
