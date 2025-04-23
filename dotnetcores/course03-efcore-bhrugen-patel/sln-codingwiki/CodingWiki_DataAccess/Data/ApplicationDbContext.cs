@@ -1,4 +1,5 @@
-﻿using CodingWiki_Model.Models;
+﻿using CodingWiki_DataAccess.FluentConfig;
+using CodingWiki_Model.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodingWiki_DataAccess.Data
@@ -48,42 +49,12 @@ namespace CodingWiki_DataAccess.Data
                 new Publisher { Publisher_Id = 3, Name = "Pub 3 Ben", Location = "Hawaii" }
                 );
 
-            modelBuilder.Entity<Fluent_BookDetail>().ToTable("Fluent_BookDetails");
-            modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).HasColumnName("NoOfChapters");
-            modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).IsRequired();
-            modelBuilder.Entity<Fluent_BookDetail>().HasKey(u => u.BookDetail_Id);
-            modelBuilder.Entity<Fluent_BookDetail>()
-                .HasOne(b => b.Book)
-                .WithOne(b => b.BookDetail)
-                .HasForeignKey<Fluent_BookDetail>(u => u.Book_Id);
-
-            modelBuilder.Entity<Fluent_Book>().Property(u => u.ISBN).HasMaxLength(50);
-            modelBuilder.Entity<Fluent_Book>().Property(u => u.ISBN).IsRequired();
-            modelBuilder.Entity<Fluent_Book>().HasKey(u => u.BookId);
-            modelBuilder.Entity<Fluent_Book>().Ignore(u => u.PriceRange);
-            modelBuilder.Entity<Fluent_Book>()
-                .HasOne(u => u.Publisher)
-                .WithMany(u => u.Books)
-                .HasForeignKey(u => u.Publisher_Id);
-
-            modelBuilder.Entity<Fluent_Publisher>().Property(u => u.Name).IsRequired();
-            modelBuilder.Entity<Fluent_Publisher>().HasKey(u => u.Publisher_Id);
-
-            modelBuilder.Entity<Fluent_Author>().Property(u => u.FirstName).HasMaxLength(50);
-            modelBuilder.Entity<Fluent_Author>().Property(u => u.FirstName).IsRequired();
-            modelBuilder.Entity<Fluent_Author>().Property(u => u.LastName).IsRequired();
-            modelBuilder.Entity<Fluent_Author>().HasKey(u => u.Author_Id);
-            modelBuilder.Entity<Fluent_Author>().Ignore(u => u.FullName);
-
-            modelBuilder.Entity<Fluent_BookAuthorMap>().HasKey(u => new { u.Author_Id, u.Book_Id });
-            modelBuilder.Entity<Fluent_BookAuthorMap>()
-                .HasOne(u => u.Book)
-                .WithMany(u => u.BookAuthorMap)
-                .HasForeignKey(u => u.Book_Id);
-            modelBuilder.Entity<Fluent_BookAuthorMap>()
-                .HasOne(u => u.Author)
-                .WithMany(u => u.BookAuthorMap)
-                .HasForeignKey(u => u.Author_Id);
+            // Fluent: demo
+            modelBuilder.ApplyConfiguration(new FluentAuthorConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookAuthorMapConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookConfig());
+            modelBuilder.ApplyConfiguration(new FluentBookDetailConfig());
+            modelBuilder.ApplyConfiguration(new FluentPublisherConfig());
         }
     }
 }
