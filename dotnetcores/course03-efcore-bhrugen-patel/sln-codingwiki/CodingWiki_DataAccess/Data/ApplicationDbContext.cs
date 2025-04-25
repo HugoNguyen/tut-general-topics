@@ -21,7 +21,12 @@ namespace CodingWiki_DataAccess.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=CodingWiki;TrustServerCertificate=True;Trusted_Connection=True;");
+            options
+                .UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=CodingWiki;TrustServerCertificate=True;Trusted_Connection=True;")
+                .LogTo(
+                    Console.WriteLine,
+                    new[] { DbLoggerCategory.Database.Command.Name },
+                    Microsoft.Extensions.Logging.LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
