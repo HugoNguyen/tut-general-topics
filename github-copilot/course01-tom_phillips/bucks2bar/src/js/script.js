@@ -1,4 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // input with id "username" on change event
+    document.getElementById('username').addEventListener('input', function () {
+        const username = this.value;
+        // regex to check if username has at least 1 capital letter, 1 special character, and is at least 8 characters long
+        const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+        if (regex.test(username)) {
+            // set the username input border to green
+            this.style.borderColor = 'green';
+        } else {
+            // set the username input border to red
+            this.style.borderColor = 'red';
+        }
+    });
+
     const ctx = document.getElementById('barChart').getContext('2d');
     const barChart = new Chart(ctx, {
         type: 'bar',
