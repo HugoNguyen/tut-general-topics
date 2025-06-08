@@ -76,4 +76,9 @@ document.addEventListener('DOMContentLoaded', function () {
         link.download = 'bucks2bar-chart.png';
         link.click();
     });
+
+    // Update barChart when user switches to the Chart tab
+    document.getElementById('chart-tab').addEventListener('shown.bs.tab', function () {
+        updateBarChart();
+    });
 });
