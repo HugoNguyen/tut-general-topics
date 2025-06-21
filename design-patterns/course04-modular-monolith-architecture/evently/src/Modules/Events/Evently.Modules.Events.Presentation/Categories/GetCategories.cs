@@ -1,6 +1,6 @@
-﻿using Evently.Modules.Events.Application.Categories.GetCategories;
+﻿using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Categories.GetCategories;
 using Evently.Modules.Events.Application.Categories.GetCategory;
-using Evently.Modules.Events.Domain.Abstractions;
 using Evently.Modules.Events.Presentation.ApiResults;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

@@ -1,5 +1,5 @@
-﻿using Evently.Modules.Events.Application.TicketTypes.UpdateTicketTypePrice;
-using Evently.Modules.Events.Domain.Abstractions;
+﻿using Evently.Common.Domain;
+using Evently.Modules.Events.Application.TicketTypes.UpdateTicketTypePrice;
 using Evently.Modules.Events.Presentation.ApiResults;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
