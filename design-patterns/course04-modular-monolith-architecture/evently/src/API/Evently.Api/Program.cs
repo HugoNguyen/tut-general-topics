@@ -15,6 +15,8 @@ builder.Services.AddApplication([Evently.Modules.Events.Application.AssemblyRefe
 
 builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
 
+builder.Configuration.AddModuleConfiguration(["events"]);
+
 builder.Services.AddEventsModule(builder.Configuration);
 
 WebApplication app = builder.Build();
