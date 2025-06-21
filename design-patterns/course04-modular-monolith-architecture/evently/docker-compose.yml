@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   evently.api:
     image: ${DOCKER_REGISTRY-}eventlyapi
@@ -22,3 +20,13 @@ services:
       - ./.containers/db:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
+  evently.seq:
+    image: datalust/seq:latest
+    container_name: Evently.Seq
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_NOAUTHENTICATION=True
+    ports:
+      - 5341:5341
+      - 8081:80
