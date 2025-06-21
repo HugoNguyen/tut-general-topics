@@ -77,6 +77,26 @@ document.addEventListener('DOMContentLoaded', function () {
         link.click();
     });
 
+    // Send chart image via email when "Send via Email" button is clicked
+    document.getElementById('email-btn').addEventListener('click', function () {
+        const email = document.getElementById('email-address').value;
+        const canvas = document.getElementById('barChart');
+        const image = canvas.toDataURL('image/png');
+
+        fetch('/send-chart-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, image })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message || 'Email sent!');
+        })
+        .catch(() => {
+            alert('Failed to send email.');
+        });
+    });
+
     // Update barChart when user switches to the Chart tab
     document.getElementById('chart-tab').addEventListener('shown.bs.tab', function () {
         updateBarChart();
