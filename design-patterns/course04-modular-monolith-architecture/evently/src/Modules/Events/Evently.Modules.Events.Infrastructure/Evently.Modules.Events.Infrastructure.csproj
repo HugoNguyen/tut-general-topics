@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Evently.Modules.Events.Presentation\Evently.Modules.Events.Presentation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
-
 </Project>

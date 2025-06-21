@@ -1,9 +1,17 @@
-﻿using Evently.Modules.Events.Application.Abstractions.Data;
+﻿using Evently.Modules.Events.Application.Abstractions.Clock;
+using Evently.Modules.Events.Application.Abstractions.Data;
+using Evently.Modules.Events.Domain.Categories;
 using Evently.Modules.Events.Domain.Events;
+using Evently.Modules.Events.Domain.TicketTypes;
+using Evently.Modules.Events.Infrastructure.Categories;
+using Evently.Modules.Events.Infrastructure.Clock;
 using Evently.Modules.Events.Infrastructure.Data;
 using Evently.Modules.Events.Infrastructure.Database;
 using Evently.Modules.Events.Infrastructure.Events;
+using Evently.Modules.Events.Infrastructure.TicketTypes;
+using Evently.Modules.Events.Presentation.Categories;
 using Evently.Modules.Events.Presentation.Events;
+using Evently.Modules.Events.Presentation.TicketTypes;
 using FluentValidation;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +27,8 @@ public static class EventsModule
 {
     public static void MapEndpoints(IEndpointRouteBuilder app)
     {
+        TicketTypeEndpoints.MapEndpoints(app);
+        CategoryEndpoints.MapEndpoints(app);
         EventEndpoints.MapEndpoints(app);
     }
 
@@ -47,16 +57,21 @@ public static class EventsModule
 
         services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
+        services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+
         services.AddDbContext<EventsDbContext>(options =>
             options
                 .UseNpgsql(
                     databaseConnectionString,
                     npgsqlOptions => npgsqlOptions
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
-                .UseSnakeCaseNamingConvention());
-
-        services.AddScoped<IEventRepository, EventRepository>();
+                .UseSnakeCaseNamingConvention()
+                .AddInterceptors());
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
+
+        services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
     }
 }

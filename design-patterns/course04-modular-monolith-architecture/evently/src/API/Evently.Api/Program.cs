@@ -4,7 +4,10 @@ using Evently.Modules.Events.Infrastructure;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
+});
 
 builder.Services.AddEventsModule(builder.Configuration);
 
