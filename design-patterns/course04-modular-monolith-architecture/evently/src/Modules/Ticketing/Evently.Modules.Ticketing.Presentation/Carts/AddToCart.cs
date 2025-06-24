@@ -1,6 +1,6 @@
 ﻿using Evently.Common.Domain;
 using Evently.Common.Presentation.Endpoints;
-using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Results;
 using Evently.Modules.Ticketing.Application.Carts.AddItemToCart;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
