@@ -23,7 +23,8 @@ namespace Evently.Modules.Users.Infrastructure.Database.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     email = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     first_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    last_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                    last_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    identity_id = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,6 +36,13 @@ namespace Evently.Modules.Users.Infrastructure.Database.Migrations
                 schema: "users",
                 table: "users",
                 column: "email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_identity_id",
+                schema: "users",
+                table: "users",
+                column: "identity_id",
                 unique: true);
         }
 
