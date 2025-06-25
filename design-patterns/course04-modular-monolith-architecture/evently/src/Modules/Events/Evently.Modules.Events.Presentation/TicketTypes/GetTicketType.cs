@@ -1,6 +1,6 @@
 ﻿using Evently.Common.Domain;
-using Evently.Common.Presentation.Results;
 using Evently.Common.Presentation.Endpoints;
+using Evently.Common.Presentation.Results;
 using Evently.Modules.Events.Application.TicketTypes.GetTicketType;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +19,7 @@ internal sealed class GetTicketType : IEndpoint
 
             return result.Match(Results.Ok, ApiResults.Problem);
         })
+        .RequireAuthorization()
         .WithTags(Tags.TicketTypes);
     }
 }

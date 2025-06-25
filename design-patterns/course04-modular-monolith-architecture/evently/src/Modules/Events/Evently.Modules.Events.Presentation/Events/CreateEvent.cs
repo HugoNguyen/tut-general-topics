@@ -1,6 +1,6 @@
 ﻿using Evently.Common.Domain;
-using Evently.Common.Presentation.Results;
 using Evently.Common.Presentation.Endpoints;
+using Evently.Common.Presentation.Results;
 using Evently.Modules.Events.Application.Events.CreateEvent;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +25,7 @@ internal sealed class CreateEvent : IEndpoint
 
             return result.Match(Results.Ok, ApiResults.Problem);
         })
+        .RequireAuthorization()
         .WithTags(Tags.Events);
     }
 
