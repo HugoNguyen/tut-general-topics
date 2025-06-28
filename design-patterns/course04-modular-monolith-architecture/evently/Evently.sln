@@ -59,9 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Ticketing.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Ticketing.Presentation", "src\Modules\Ticketing\Evently.Modules.Ticketing.Presentation\Evently.Modules.Ticketing.Presentation.csproj", "{C4C90F38-138A-476B-A57C-9B15ECAE2C34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Events.PublicApi", "src\Modules\Events\Evently.Modules.Events.PublicApi\Evently.Modules.Events.PublicApi.csproj", "{D2176817-2F37-4AB6-B724-320909844ACB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Modules.Users.IntegrationEvents", "src\Modules\Users\Evently.Modules.Users.IntegrationEvents\Evently.Modules.Users.IntegrationEvents.csproj", "{B6DB4639-2A8C-45E1-95A5-C3E0E33A7A78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Users.IntegrationEvents", "src\Modules\Users\Evently.Modules.Users.IntegrationEvents\Evently.Modules.Users.IntegrationEvents.csproj", "{B6DB4639-2A8C-45E1-95A5-C3E0E33A7A78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,10 +139,6 @@ Global
 		{C4C90F38-138A-476B-A57C-9B15ECAE2C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4C90F38-138A-476B-A57C-9B15ECAE2C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4C90F38-138A-476B-A57C-9B15ECAE2C34}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2176817-2F37-4AB6-B724-320909844ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2176817-2F37-4AB6-B724-320909844ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2176817-2F37-4AB6-B724-320909844ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2176817-2F37-4AB6-B724-320909844ACB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B6DB4639-2A8C-45E1-95A5-C3E0E33A7A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B6DB4639-2A8C-45E1-95A5-C3E0E33A7A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6DB4639-2A8C-45E1-95A5-C3E0E33A7A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -177,7 +171,6 @@ Global
 		{3BD33A41-82BA-4FD2-BEAA-D99B04D73605} = {B51A67D9-33E4-4FCD-88FF-65724ABFB4C8}
 		{7ACE65DB-79DA-4B75-8DA2-6F4ED6D7204A} = {B51A67D9-33E4-4FCD-88FF-65724ABFB4C8}
 		{C4C90F38-138A-476B-A57C-9B15ECAE2C34} = {B51A67D9-33E4-4FCD-88FF-65724ABFB4C8}
-		{D2176817-2F37-4AB6-B724-320909844ACB} = {83C39285-38DB-49C0-8A84-8809ED682E2B}
 		{B6DB4639-2A8C-45E1-95A5-C3E0E33A7A78} = {9BB04DDC-139E-4EC6-B00C-35B393DFA009}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
