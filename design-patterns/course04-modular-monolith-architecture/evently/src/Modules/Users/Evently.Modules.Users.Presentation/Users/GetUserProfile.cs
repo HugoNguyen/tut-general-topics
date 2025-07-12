@@ -21,7 +21,7 @@ internal sealed class GetUserProfile : IEndpoint
 
             return result.Match(Results.Ok, ApiResults.Problem);
         })
-        .RequireAuthorization("users:read")
+        .RequireAuthorization(Permissions.GetUser)
         .WithTags(Tags.Users);
     }
 }

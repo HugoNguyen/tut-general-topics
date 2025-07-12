@@ -3,10 +3,10 @@ using System.Data.Common;
 using Dapper;
 using Evently.Common.Application.Clock;
 using Evently.Common.Application.Data;
+using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
+using Evently.Common.Infrastructure.Outbox;
 using Evently.Common.Infrastructure.Serialization;
-using Evently.Modules.Users.Domain.Users;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -45,9 +45,15 @@ internal sealed class ProcessOutboxJob(
 
                 using IServiceScope scope = serviceScopeFactory.CreateScope();
 
-                IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
+                IEnumerable<IDomainEventHandler> domainEventHandlers = DomainEventHandlersFactory.GetHandlers(
+                    domainEvent.GetType(),
+                    scope.ServiceProvider,
+                    Application.AssemblyReference.Assembly);
 
-                await publisher.Publish(domainEvent);
+                foreach (IDomainEventHandler domainEventHandler in domainEventHandlers)
+                {
+                    await domainEventHandler.Handle(domainEvent);
+                }
             }
             catch (Exception caughtException)
             {

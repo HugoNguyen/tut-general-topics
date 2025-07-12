@@ -13,6 +13,7 @@ internal sealed class SearchEvents : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
+
         app.MapGet("events/search", async(
             ISender sender,
             Guid ? categoryId,
@@ -26,7 +27,7 @@ internal sealed class SearchEvents : IEndpoint
 
             return result.Match(Results.Ok, ApiResults.Problem);
         })
-        .RequireAuthorization()
+        .RequireAuthorization(Permissions.SearchEvents)
         .WithTags(Tags.Events);
     }
 }

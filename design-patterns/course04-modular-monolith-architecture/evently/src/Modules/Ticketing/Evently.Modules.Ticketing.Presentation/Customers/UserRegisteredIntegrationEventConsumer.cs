@@ -17,7 +17,8 @@ public sealed class UserRegisteredIntegrationEventConsumer(ISender sender)
                 context.Message.UserId,
                 context.Message.Email,
                 context.Message.FirstName,
-                context.Message.LastName));
+                context.Message.LastName),
+            context.CancellationToken);
 
         if (result.IsFailure)
         {
