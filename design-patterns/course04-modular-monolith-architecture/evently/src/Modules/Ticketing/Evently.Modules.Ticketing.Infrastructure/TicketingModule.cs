@@ -14,9 +14,12 @@ using Evently.Modules.Ticketing.Infrastructure.Customers;
 using Evently.Modules.Ticketing.Infrastructure.Database;
 using Evently.Modules.Ticketing.Infrastructure.Events;
 using Evently.Modules.Ticketing.Infrastructure.Orders;
+using Evently.Modules.Ticketing.Infrastructure.Outbox;
 using Evently.Modules.Ticketing.Infrastructure.Payments;
 using Evently.Modules.Ticketing.Infrastructure.Tickets;
 using Evently.Modules.Ticketing.Presentation.Customers;
+using Evently.Modules.Ticketing.Presentation.Events;
+using Evently.Modules.Ticketing.Presentation.TicketTypes;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -27,9 +30,7 @@ namespace Evently.Modules.Ticketing.Infrastructure;
 
 public static class TicketingModule
 {
-    public static IServiceCollection AddTicketingModule(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    public static IServiceCollection AddTicketingModule(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddInfrastructure(configuration);
 
@@ -41,6 +42,9 @@ public static class TicketingModule
     public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
     {
         registrationConfigurator.AddConsumer<UserRegisteredIntegrationEventConsumer>();
+        registrationConfigurator.AddConsumer<UserProfileUpdatedIntegrationEventConsumer>();
+        registrationConfigurator.AddConsumer<EventPublishedIntegrationEventConsumer>();
+        registrationConfigurator.AddConsumer<TicketTypePriceChangedIntegrationEventConsumer>();
     }
 
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -51,7 +55,7 @@ public static class TicketingModule
                     configuration.GetConnectionString("Database"),
                     npgsqlOptions => npgsqlOptions
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Ticketing))
-                .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>())
+                .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
                 .UseSnakeCaseNamingConvention());
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -67,5 +71,9 @@ public static class TicketingModule
         services.AddSingleton<IPaymentService, PaymentService>();
 
         services.AddScoped<ICustomerContext, CustomerContext>();
+
+        services.Configure<OutboxOptions>(configuration.GetSection("Ticketing:Outbox"));
+
+        services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
 }

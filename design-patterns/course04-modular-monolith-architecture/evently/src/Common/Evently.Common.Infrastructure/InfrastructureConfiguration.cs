@@ -1,4 +1,5 @@
-﻿using Evently.Common.Application.Caching;
+﻿using Dapper;
+using Evently.Common.Application.Caching;
 using Evently.Common.Application.Clock;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.EventBus;
@@ -12,6 +13,7 @@ using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
+using Quartz;
 using StackExchange.Redis;
 
 namespace Evently.Common.Infrastructure;
@@ -28,14 +30,22 @@ public static class InfrastructureConfiguration
 
         services.AddAuthorizationInternal();
 
+        services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+        services.TryAddSingleton<IEventBus, EventBus.EventBus>();
+
+        services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
+
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnectionString).Build();
         services.TryAddSingleton(npgsqlDataSource);
 
         services.TryAddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
-        services.TryAddSingleton<PublishDomainEventsInterceptor>();
+        SqlMapper.AddTypeHandler(new GenericArrayHandler<string>());
 
-        services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddQuartz();
+
+        services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
         try
         {
@@ -52,13 +62,11 @@ public static class InfrastructureConfiguration
 
         services.TryAddSingleton<ICacheService, CacheService>();
 
-        services.TryAddSingleton<IEventBus, EventBus.EventBus>();
-
         services.AddMassTransit(configure =>
         {
-            foreach (Action<IRegistrationConfigurator> configureConsumer in moduleConfigureConsumers)
+            foreach (Action<IRegistrationConfigurator> configureConsumers in moduleConfigureConsumers)
             {
-                configureConsumer(configure);
+                configureConsumers(configure);
             }
 
             configure.SetKebabCaseEndpointNameFormatter();

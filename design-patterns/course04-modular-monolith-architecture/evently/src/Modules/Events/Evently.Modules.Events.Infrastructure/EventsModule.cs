@@ -7,6 +7,7 @@ using Evently.Modules.Events.Domain.TicketTypes;
 using Evently.Modules.Events.Infrastructure.Categories;
 using Evently.Modules.Events.Infrastructure.Database;
 using Evently.Modules.Events.Infrastructure.Events;
+using Evently.Modules.Events.Infrastructure.Outbox;
 using Evently.Modules.Events.Infrastructure.TicketTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -21,30 +22,32 @@ public static class EventsModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddEndpoints(Presentation.AssemblyReference.Assembly);
-
         services.AddInfrastructure(configuration);
+
+        services.AddEndpoints(Presentation.AssemblyReference.Assembly);
 
         return services;
     }
 
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        string databaseConnectionString = configuration.GetConnectionString("Database")!;
-
         services.AddDbContext<EventsDbContext>((sp, options) =>
             options
                 .UseNpgsql(
-                    databaseConnectionString,
+                    configuration.GetConnectionString("Database"),
                     npgsqlOptions => npgsqlOptions
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
                 .UseSnakeCaseNamingConvention()
-                .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>()));
+                .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>()));
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
 
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+        services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
+
+        services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
 }
