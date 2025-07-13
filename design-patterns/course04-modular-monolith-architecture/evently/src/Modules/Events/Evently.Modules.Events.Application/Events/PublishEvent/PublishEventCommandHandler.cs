@@ -26,7 +26,12 @@ internal sealed class PublishEventCommandHandler(
             return Result.Failure(EventErrors.NoTicketsFound);
         }
 
-        @event.Publish();
+        Result result = @event.Publish();
+
+        if (result.IsFailure)
+        {
+            return result;
+        }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
