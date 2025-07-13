@@ -87,4 +87,5 @@ app.MapEndpoints();
 
 app.Run();
 
-internal partial class Program;
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Maintainability", "CA1515:Consider making public types internal", Justification = "<Pending>")]
+public partial class Program;
