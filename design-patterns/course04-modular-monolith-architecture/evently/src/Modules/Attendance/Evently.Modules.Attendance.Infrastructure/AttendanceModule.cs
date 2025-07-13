@@ -14,9 +14,6 @@ using Evently.Modules.Attendance.Infrastructure.Events;
 using Evently.Modules.Attendance.Infrastructure.Inbox;
 using Evently.Modules.Attendance.Infrastructure.Outbox;
 using Evently.Modules.Attendance.Infrastructure.Tickets;
-using Evently.Modules.Attendance.Presentation.Attendees;
-using Evently.Modules.Attendance.Presentation.Events;
-using Evently.Modules.Attendance.Presentation.Tickets;
 using Evently.Modules.Events.IntegrationEvents;
 using Evently.Modules.Ticketing.IntegrationEvents;
 using Evently.Modules.Users.IntegrationEvents;
@@ -46,12 +43,22 @@ public static class AttendanceModule
         return services;
     }
 
-    public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
+    public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator, string instanceId)
     {
-        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
-        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserProfileUpdatedIntegrationEvent>>();
-        registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventPublishedIntegrationEvent>>();
-        registrationConfigurator.AddConsumer<IntegrationEventConsumer<TicketIssuedIntegrationEvent>>();
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserProfileUpdatedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventPublishedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<TicketIssuedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventCancellationStartedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
     }
 
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)

@@ -5,6 +5,7 @@ using Evently.Api.OpenTelemetry;
 using Evently.Common.Application;
 using Evently.Common.Infrastructure;
 using Evently.Common.Infrastructure.Configuration;
+using Evently.Common.Infrastructure.EventBus;
 using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Attendance.Infrastructure;
 using Evently.Modules.Events.Infrastructure;
@@ -34,6 +35,7 @@ builder.Services.AddApplication(moduleApplicationAssemblies);
 
 string databaseConnectionString = builder.Configuration.GetConnectionStringOrThrow("Database");
 string redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache");
+var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionStringOrThrow("Queue"));
 
 builder.Services.AddInfrastructure(
     DiagnosticsConfig.ServiceName,
@@ -42,6 +44,7 @@ builder.Services.AddInfrastructure(
         TicketingModule.ConfigureConsumers,
         AttendanceModule.ConfigureConsumers
     ],
+    rabbitMqSettings,
     databaseConnectionString,
     redisConnectionString);
 
@@ -50,6 +53,7 @@ Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
 builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
     .AddRedis(redisConnectionString)
+    .AddRabbitMQ(rabbitConnectionString: rabbitMqSettings.Host)
     .AddKeyCloak(keyCloakHealthUrl);
 
 builder.Configuration.AddModuleConfiguration(["users", "events", "ticketing", "attendance"]);
