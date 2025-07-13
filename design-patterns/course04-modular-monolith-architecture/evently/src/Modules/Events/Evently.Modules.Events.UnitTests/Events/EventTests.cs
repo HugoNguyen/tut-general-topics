@@ -13,7 +13,7 @@ public class EventTests : BaseTest
     {
         // Arrange
         var category = Category.Create(Faker.Music.Genre());
-        DateTime startsAtUtc = DateTime.Now;
+        DateTime startsAtUtc = DateTime.UtcNow;
         DateTime endsAtUtc = startsAtUtc.AddMinutes(-1);
 
         // Act
@@ -34,7 +34,7 @@ public class EventTests : BaseTest
     {
         // Arrange
         var category = Category.Create(Faker.Music.Genre());
-        DateTime startsAtUtc = DateTime.Now;
+        DateTime startsAtUtc = DateTime.UtcNow;
 
         // Act
         Result<Event> result = Event.Create(
