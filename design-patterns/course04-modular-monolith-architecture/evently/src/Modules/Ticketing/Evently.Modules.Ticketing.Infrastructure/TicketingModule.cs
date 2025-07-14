@@ -1,4 +1,5 @@
-﻿using Evently.Common.Application.EventBus;
+﻿using Evently.Common.Application.Authorization;
+using Evently.Common.Application.EventBus;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Infrastructure.Outbox;
 using Evently.Common.Presentation.Endpoints;
@@ -13,6 +14,7 @@ using Evently.Modules.Ticketing.Domain.Orders;
 using Evently.Modules.Ticketing.Domain.Payments;
 using Evently.Modules.Ticketing.Domain.Tickets;
 using Evently.Modules.Ticketing.Infrastructure.Authentication;
+using Evently.Modules.Ticketing.Infrastructure.Authorization;
 using Evently.Modules.Ticketing.Infrastructure.Customers;
 using Evently.Modules.Ticketing.Infrastructure.Database;
 using Evently.Modules.Ticketing.Infrastructure.Events;
@@ -96,6 +98,8 @@ public static class TicketingModule
         services.Configure<InboxOptions>(configuration.GetSection("Ticketing:Inbox"));
 
         services.ConfigureOptions<ConfigureProcessInboxJob>();
+
+        services.AddScoped<IPermissionService, PermissionService>();
     }
 
     private static void AddDomainEventHandlers(this IServiceCollection services)

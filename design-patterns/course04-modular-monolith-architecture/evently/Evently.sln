@@ -115,7 +115,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.ArchitectureTests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.IntegrationTests", "test\Evently.IntegrationTests\Evently.IntegrationTests.csproj", "{EE3BC76B-3055-4187-9636-A9FA5C6756C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Gateway", "src\API\Evently.Gateway\Evently.Gateway.csproj", "{CE1C2BE7-7CBE-42B4-8C84-3E51ED6A7B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Gateway", "src\API\Evently.Gateway\Evently.Gateway.csproj", "{CE1C2BE7-7CBE-42B4-8C84-3E51ED6A7B40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Ticketing.Api", "src\API\Evently.Ticketing.Api\Evently.Ticketing.Api.csproj", "{4F18A569-4AFE-4F11-88A3-61AD3FB6385B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -287,6 +289,10 @@ Global
 		{CE1C2BE7-7CBE-42B4-8C84-3E51ED6A7B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE1C2BE7-7CBE-42B4-8C84-3E51ED6A7B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE1C2BE7-7CBE-42B4-8C84-3E51ED6A7B40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F18A569-4AFE-4F11-88A3-61AD3FB6385B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F18A569-4AFE-4F11-88A3-61AD3FB6385B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F18A569-4AFE-4F11-88A3-61AD3FB6385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F18A569-4AFE-4F11-88A3-61AD3FB6385B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -343,6 +349,7 @@ Global
 		{CC9D5AC0-FCD0-4A53-9B65-F7F194F26DC4} = {4542BDEB-6361-414E-BA96-64418BD0FC4F}
 		{EE3BC76B-3055-4187-9636-A9FA5C6756C1} = {4542BDEB-6361-414E-BA96-64418BD0FC4F}
 		{CE1C2BE7-7CBE-42B4-8C84-3E51ED6A7B40} = {932AEF4C-FC6B-4496-9051-1AD3763D10DB}
+		{4F18A569-4AFE-4F11-88A3-61AD3FB6385B} = {932AEF4C-FC6B-4496-9051-1AD3763D10DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E42AE86-7F3C-45F4-A386-AB71CC4446CB}

@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\API\Evently.Api\Evently.Api.csproj" />
+    <ProjectReference Include="..\..\..\API\Evently.Ticketing.Api\Evently.Ticketing.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>
