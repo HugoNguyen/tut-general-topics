@@ -8,6 +8,16 @@ services:
     ports:
       - 5000:8080
       - 5001:8081
+  
+  evently.gateway:
+    image: ${DOCKER_REGISTRY-}eventlygateway
+    container_name: Evently.Gateway
+    build:
+      context: .
+      dockerfile: src/API/Evently.Gateway/Dockerfile
+    ports:
+      - 3000:8080
+      - 3001:8081 
 
   evently.database:
     image: postgres:latest
